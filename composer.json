@@ -1,0 +1,39 @@
+{
+    "name": "xedinunknown/taxonomy-quiz",
+    "description": "A quiz plugin which relates answers to taxonomies",
+    "type": "wordpress-plugin",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Anton Ukhanev",
+            "email": "xedin.unknown@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^5.4 | ^7.0"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^1.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3"
+    },
+    "scripts": {
+        "cscheck": "phpcs -s -n",
+        "csfix": "phpcbf --standard=phpcs.xml"
+    },
+    "autoload": {
+        "classmap": ["classes/"]
+    },
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
+        }
+    ],
+    "extra": {
+        "installer-paths": {
+            "../{$name}/": ["type:wordpress-plugin"]
+        }
+    }
+}
