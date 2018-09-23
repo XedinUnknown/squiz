@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c6171298c8971e86c4827a5e65e3af0",
+    "content-hash": "4f9304cb83b346653813a43531082f5b",
     "packages": [],
     "packages-dev": [
         {
@@ -196,29 +196,6 @@
             "time": "2017-12-06T16:27:17+00:00"
         },
         {
-            "name": "plasticmind/mb-term-meta",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/plasticmind/mb-term-meta.git",
-                "reference": "d3c58ddfc768f06a7bb08e6bfecf0d25ad257473"
-            },
-            "require": {
-                "composer/installers": "^1.0"
-            },
-            "type": "wordpress-plugin",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "MetaBox.io"
-                }
-            ],
-            "description": "Add custom fields (meta data) for terms.",
-            "time": "2017-08-16T19:08:13+00:00"
-        },
-        {
             "name": "squizlabs/php_codesniffer",
             "version": "3.3.1",
             "source": {
@@ -351,6 +328,26 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/meta-box/"
+        },
+        {
+            "name": "wpackagist-plugin/simple-taxonomy-ordering",
+            "version": "1.2.7",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/simple-taxonomy-ordering/",
+                "reference": "tags/1.2.7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/simple-taxonomy-ordering.1.2.7.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/simple-taxonomy-ordering/"
         }
     ],
     "aliases": [],
