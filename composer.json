@@ -1,6 +1,6 @@
 {
-    "name": "xedinunknown/taxonomy-quiz",
-    "description": "A quiz plugin which relates answers to taxonomies",
+    "name": "xedinunknown/squiz",
+    "description": "A quiz plugin that provides a framework for questions and answers",
     "type": "wordpress-plugin",
     "license": "GPLv3",
     "authors": [
