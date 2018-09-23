@@ -16,7 +16,10 @@
     },
     "require-dev": {
         "wp-coding-standards/wpcs": "^1.0",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3"
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3",
+        "wpackagist-plugin/meta-box": "^4.14",
+        "wpackagist-plugin/mb-relationships": "^1.4",
+        "plasticmind/mb-term-meta": "*"
     },
     "scripts": {
         "cscheck": "phpcs -s -n",
@@ -29,6 +32,10 @@
         {
             "type":"composer",
             "url":"https://wpackagist.org"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/plasticmind/mb-term-meta.git"
         }
     ],
     "extra": {
