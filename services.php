@@ -76,9 +76,23 @@ return function ( $base_path, $base_url ) {
                 return 'question';
             },
 
+            'questions_to_answers_relationship_name' => 'questions_to_answers',
+
+            'course_post_type'             => function ( DI_Container $c ) {
+                return 'courses';
+            },
+
+            'course_groups_taxonomy'             => function ( DI_Container $c ) {
+                return 'course_groups';
+            },
+
+            'quiz_post_type'                => 'quiz',
+
+            'quizes_to_questions_relationship_name' => 'quizes_to_questions',
+
             'field_relationships'             => function (DI_Container $c) {
 			    return [
-                    'questions_to_answers' => [
+                    $c->get('questions_to_answers_relationship_name') => [
                         'from' => [
                             'object_type' => 'post',
                             'post_type' => $c->get('question_post_type'),
@@ -91,6 +105,26 @@ return function ( $base_path, $base_url ) {
                             'post_type' => $c->get('answer_post_type'),
                             'meta_box' => [
                                 'title' => __('Questions', 'squiz'),
+                            ],
+                        ],
+                    ],
+                    /*
+                     * Courses
+                     */
+                    $c->get('quizes_to_questions_relationship_name') => [
+                        'from' => [
+                            'object_type' => 'post',
+                            'post_type' => $c->get('quiz_post_type'),
+                            'meta_box' => [
+                                'title' => __('Questions', 'squiz'),
+                                'context' => 'advanced',
+                            ],
+                        ],
+                        'to' => [
+                            'object_type' => 'post',
+                            'post_type' => $c->get('question_post_type'),
+                            'meta_box' => [
+                                'title' => __('Quizes', 'squiz'),
                             ],
                         ],
                     ],
@@ -135,6 +169,42 @@ return function ( $base_path, $base_url ) {
                         'has_archive'   => false,
                         'rewrite'       => false,
                     ],
+                    /*
+                     * Courses
+                     */
+                    $c->get('course_post_type') => [
+                        'labels' => [
+                            'name'          => __('Courses', 'squiz'),
+                            'add_new_item' => __('Add New Course', 'squiz'),
+                        ],
+                        'description'   => __('Courses for SQuiz plugin', 'squiz'),
+                        'public'        => false,
+                        'show_ui'       => true,
+                        'show_in_menu'  => true,
+                        "menu_icon"     => 'dashicons-welcome-learn-more',
+                        'capability_type' => 'post',
+                        'supports'      => 'title',
+                        'has_archive'   => false,
+                        'rewrite'       => false,
+                    ],
+                    /*
+                     * Quizes
+                     */
+                    $c->get('quiz_post_type') => [
+                        'labels' => [
+                            'name'          => __('Quizes', 'squiz'),
+                            'add_new_item' => __('Add New Quiz', 'squiz'),
+                        ],
+                        'description'   => __('Quizes for SQuiz plugin', 'squiz'),
+                        'public'        => false,
+                        'show_ui'       => true,
+                        'show_in_menu'  => true,
+                        "menu_icon"     => 'dashicons-format-aside',
+                        'capability_type' => 'post',
+                        'supports'      => 'title',
+                        'has_archive'   => false,
+                        'rewrite'       => false,
+                    ],
                 ];
             },
 
@@ -149,6 +219,21 @@ return function ( $base_path, $base_url ) {
                         'public' => false,
                         'show_ui' => true,
                         'show_in_menu'  => sprintf('edit.php?post_type=%1$s', $c->get('answer_post_type')),
+                        'rewrite' => false,
+                        'hierarchical' => true,
+                    ],
+                    /*
+                     * Courses
+                     */
+                    $c->get('course_groups_taxonomy') => [
+                        'object_type' => [$c->get('course_post_type')],
+                        'labels' => [
+                            'name'=> __('Course Groups', 'squiz'),
+                        ],
+                        'description' => __('Course Groups for Taxonomy Quiz questions', 'squiz'),
+                        'public' => false,
+                        'show_ui' => true,
+                        'show_in_menu'  => true,
                         'rewrite' => false,
                         'hierarchical' => true,
                     ],
