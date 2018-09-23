@@ -2,13 +2,13 @@
 /**
  * Contains service definitions used by the plugin.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 
-use XedinUnknown\TaxonomyQuiz\DI_Container;
-use XedinUnknown\TaxonomyQuiz\Fields_Types_Handler;
-use XedinUnknown\TaxonomyQuiz\PHP_Template;
-use XedinUnknown\TaxonomyQuiz\Template_Block;
+use XedinUnknown\SQuiz\DI_Container;
+use XedinUnknown\SQuiz\Fields_Types_Handler;
+use XedinUnknown\SQuiz\PHP_Template;
+use XedinUnknown\SQuiz\Template_Block;
 
 /**
  * A factory of a service definition map.
@@ -111,7 +111,7 @@ return function ( $base_path, $base_url ) {
                             'name'          => __('Questions', 'squiz'),
                             'add_new_item' => __('Add New Question', 'squiz'),
                         ],
-                        'description'   => __('Questions for Answers plugin', 'squiz'),
+                        'description'   => __('Questions for SQuiz plugin', 'squiz'),
                         'public'        => false,
                         'show_ui'       => true,
                         'show_in_menu'  => true,
@@ -123,9 +123,9 @@ return function ( $base_path, $base_url ) {
                     $c->get('answer_post_type') => [
                         'labels' => [
                             'name'          => __('Answers', 'squiz'),
-                            'add_new_item' => __('Add New Answer', 'squiz'),
+                            'add_new_item' => __('Add New SQuiz', 'squiz'),
                         ],
-                        'description'   => __('Answers for Answers plugin questions', 'squiz'),
+                        'description'   => __('Answers for SQuiz plugin questions', 'squiz'),
                         'public'        => false,
                         'show_ui'       => true,
                         'show_in_menu'  => sprintf('edit.php?post_type=%1$s', $c->get('question_post_type')),

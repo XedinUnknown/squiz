@@ -2,10 +2,10 @@
 /**
  * Qanda_Fields_Types_Handler class.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
 
 
 /**
@@ -13,7 +13,7 @@ namespace XedinUnknown\TaxonomyQuiz;
  *
  * @since [*next-version*]
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 class Fields_Types_Handler extends Handler
 {

@@ -2,10 +2,10 @@
 /**
  * Plugin class.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
 
 /**
  * Plugin's main class.

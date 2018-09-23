@@ -2,15 +2,15 @@
 /**
  * Handler class.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
 
 /**
  * A base class for all handlers.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 abstract class Handler {
 

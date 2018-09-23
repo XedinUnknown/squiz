@@ -2,10 +2,10 @@
 /**
  * Fields_Types_Handler class.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
 
 use Exception;
 use MB_Relationships_API;
@@ -16,7 +16,7 @@ use MB_Relationships_Relationship;
  *
  * @since [*next-version*]
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 trait Fields_Types_Register_Capable_Trait
 {

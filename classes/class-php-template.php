@@ -2,17 +2,17 @@
 /**
  * DI_Container class.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
 
 /**
  * Represents a template.
  *
  * @since 0.1
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 class PHP_Template {
 

@@ -2,10 +2,10 @@
 /**
  * DI_Container class.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
 
 use Exception;
 
@@ -16,7 +16,7 @@ use Exception;
  *
  * @since 0.1
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 class Template_Block {
 

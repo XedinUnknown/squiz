@@ -2,10 +2,10 @@
 /**
  * Product Code for WooCommerce plugin.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  * @wordpress-plugin
  *
- * Plugin Name: Taxonomy Quiz
+ * Plugin Name: SQuiz
  * Description: A quiz plugin which relates answers to taxonomies
  * Version: [*next-version*]
  * Author: Anton Ukhanev
@@ -16,7 +16,7 @@
  * Domain Path: /languages
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
 
 /**
  * Retrieves the plugin singleton.
