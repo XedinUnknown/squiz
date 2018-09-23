@@ -8,6 +8,7 @@
 use XedinUnknown\SQuiz\DI_Container;
 use XedinUnknown\SQuiz\Fields_Types_Handler;
 use XedinUnknown\SQuiz\PHP_Template;
+use XedinUnknown\SQuiz\Quiz_Shortcode_Handler;
 use XedinUnknown\SQuiz\Template_Block;
 
 /**
@@ -60,7 +61,8 @@ return function ( $base_path, $base_url ) {
 			 */
 			'handlers'                        => function ( DI_Container $c ) {
 				return [
-				    $c->get('fields_types_handler')
+                    $c->get('fields_types_handler'),
+                    $c->get('quiz_shortcode_handler'),
 				];
 			},
 
@@ -133,6 +135,10 @@ return function ( $base_path, $base_url ) {
 
             'fields_types_handler'            => function ( DI_Container $c ) {
 			    return new Fields_Types_Handler( $c );
+            },
+
+            'quiz_shortcode_handler'            => function ( DI_Container $c ) {
+			    return new Quiz_Shortcode_Handler( $c );
             },
 
             /*
@@ -241,5 +247,6 @@ return function ( $base_path, $base_url ) {
                     ],
                 ];
             },
+            'quiz_shortcode_name'                   => 'squiz',
 		];
 };
