@@ -17,6 +17,7 @@ $grouped_questions = $c('grouped_questions');
 /* @var $grouped_questions array<int, array<int, WP_Post>> */
 $grouped_answers = $c('grouped_answers');
 /* @var $grouped_answers array<int, array<int, WP_Post>> */
+$answer_groups_name = $c('submission_answer_groups_var_name');
 ?>
 <?php $quiz_id = $quiz->ID ?>
 <div class="quiz" id="quiz-<?php echo esc_attr($quiz_id) ?>">
@@ -49,7 +50,7 @@ $grouped_answers = $c('grouped_answers');
                             <?php $html_answer_id = "answer_{$question_id}_{$answer_id}" ?>
                                             <li>
                                                 <div class="answer answer-container-<?php echo esc_attr($answer_id) ?>">
-                                                    <input type="checkbox" id="<?php echo esc_attr($html_answer_id) ?>" name="answers[<?php echo esc_attr($question_id) ?>][]" value="<?php echo esc_attr($answer_id) ?>" />
+                                                    <input type="checkbox" id="<?php echo esc_attr($html_answer_id) ?>" name="<?php echo esc_attr($answer_groups_name) ?>[<?php echo esc_attr($question_id) ?>][]" value="<?php echo esc_attr($answer_id) ?>" />
                                                     <label for="<?php echo esc_attr($html_answer_id) ?>"><?php echo get_the_title($answer) ?></label>
                                                 </div>
                                             </li>

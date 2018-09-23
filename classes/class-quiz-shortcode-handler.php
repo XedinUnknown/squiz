@@ -76,6 +76,7 @@ class Quiz_Shortcode_Handler extends Handler
                 'question_groups' => $question_groups,
                 'grouped_questions' => $grouped_questions,
                 'grouped_answers' => $grouped_answers,
+                'submission_answer_groups_var_name' => $this->get_config('submission_answer_groups_var_name'),
             ]);
         } catch (Exception $e) {
             $message = __('Could not render SQuiz shortcode', 'squiz');

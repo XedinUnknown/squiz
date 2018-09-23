@@ -9,6 +9,7 @@ use XedinUnknown\SQuiz\DI_Container;
 use XedinUnknown\SQuiz\Fields_Types_Handler;
 use XedinUnknown\SQuiz\PHP_Template;
 use XedinUnknown\SQuiz\Quiz_Shortcode_Handler;
+use XedinUnknown\SQuiz\Quiz_Submission_Handler;
 use XedinUnknown\SQuiz\Template_Block;
 
 /**
@@ -63,6 +64,7 @@ return function ( $base_path, $base_url ) {
 				return [
                     $c->get('fields_types_handler'),
                     $c->get('quiz_shortcode_handler'),
+                    $c->get('quiz_submission_handler'),
 				];
 			},
 
@@ -89,6 +91,7 @@ return function ( $base_path, $base_url ) {
             },
 
             'quiz_post_type'                => 'quiz',
+            'quiz_submission_post_type'     => 'quiz_submission',
 
             'quizes_to_questions_relationship_name' => 'quizes_to_questions',
 
@@ -213,6 +216,28 @@ return function ( $base_path, $base_url ) {
                         'has_archive'   => false,
                         'rewrite'       => false,
                     ],
+                    $c->get('quiz_submission_post_type') => [
+                        'labels' => [
+                            'name'          => __('Quiz Submissions', 'squiz'),
+                            'add_new_item' => __('Add New Submissions', 'squiz'),
+                        ],
+                        'description'   => __('Quiz Submissions for SQuiz plugin', 'squiz'),
+                        'public'        => false,
+                        'show_ui'       => true,
+                        'show_in_menu'  => sprintf('edit.php?post_type=%1$s', $c->get('quiz_post_type')),
+                        "menu_icon"     => 'dashicons-format-aside',
+                        'capability_type' => 'post',
+                        'capabilities'  => [
+                            'create_post' => 'do_not_allow',
+                        ],
+                        'map_meta_cap'  => true,
+                        'supports'      => [
+                            'title',
+                            'custom-fields',
+                        ],
+                        'has_archive'   => false,
+                        'rewrite'       => false,
+                    ],
                 ];
             },
 
@@ -248,5 +273,12 @@ return function ( $base_path, $base_url ) {
                 ];
             },
             'quiz_shortcode_name'                   => 'squiz',
+            'submission_answer_groups_var_name'     => 'squiz-answers',
+            'submission_field_quiz_id'              => 'squiz_quiz_id',
+            'submission_field_grouped_answers'      => 'squiz_grouped_answers',
+
+            'quiz_submission_handler'               => function ( DI_Container $c ) {
+                return new Quiz_Submission_Handler($c);
+            },
 		];
 };
