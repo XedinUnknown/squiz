@@ -25,6 +25,9 @@ use WP_Term_Query;
  */
 class Quiz_Shortcode_Handler extends Handler
 {
+    /* @since [*next-version*] */
+    use Get_Quiz_Capable_Trait;
+
     /**
      * Qanda_Fields_Types_Handler constructor.
      *
@@ -100,24 +103,13 @@ class Quiz_Shortcode_Handler extends Handler
     }
 
     /**
-     * Retrieves a quiz by ID.
+     * {@inheritdoc}
      *
      * @since [*next-version*]
-     *
-     * @param int $id The ID of the quiz to get.
-     *
-     * @throws OutOfRangeException If quiz for the specified ID does not exist.
-     *
-     * @return WP_Post The quiz post.
      */
-    protected function get_quiz($id) {
-        $result = get_post($id);
-
-        if (is_wp_error($result) || is_null($result)) {
-            throw new OutOfRangeException(vsprintf('Could not find quiz "%1$s"', [$id]));
-        }
-
-        return $result;
+    protected function get_quiz_post_type_name()
+    {
+        return $this->get_config('quiz_post_type');
     }
 
     /**
