@@ -20,8 +20,6 @@ class Fields_Types_Handler extends Handler
     /* @since [*next-version*] */
     use Fields_Types_Register_Capable_Trait;
 
-    protected $relationships;
-
     /**
      * Qanda_Fields_Types_Handler constructor.
      *
