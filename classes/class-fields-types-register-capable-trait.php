@@ -1,6 +1,6 @@
 <?php
 /**
- * Fields_Types_Handler class.
+ * Fields_Types_Register_Capable_Trait class.
  *
  * @package SQuiz
  */

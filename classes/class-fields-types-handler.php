@@ -1,6 +1,6 @@
 <?php
 /**
- * Qanda_Fields_Types_Handler class.
+ * Fields_Types_Handler class.
  *
  * @package SQuiz
  */
