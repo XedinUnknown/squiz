@@ -95,6 +95,8 @@ return function ( $base_path, $base_url ) {
 
             'quizes_to_questions_relationship_name' => 'quizes_to_questions',
 
+            'answers_to_courses_relationship_name' => 'answers_to_courses',
+
             'field_relationships'             => function (DI_Container $c) {
 			    return [
                     $c->get('questions_to_answers_relationship_name') => [
@@ -130,6 +132,23 @@ return function ( $base_path, $base_url ) {
                             'post_type' => $c->get('question_post_type'),
                             'meta_box' => [
                                 'title' => __('Quizes', 'squiz'),
+                            ],
+                        ],
+                    ],
+                    $c->get('answers_to_courses_relationship_name') => [
+                        'from' => [
+                            'object_type' => 'post',
+                            'post_type' => $c->get('answer_post_type'),
+                            'meta_box' => [
+                                'title' => __('Courses', 'squiz'),
+                                'context' => 'advanced',
+                            ],
+                        ],
+                        'to' => [
+                            'object_type' => 'post',
+                            'post_type' => $c->get('course_post_type'),
+                            'meta_box' => [
+                                'title' => __('Answers', 'squiz'),
                             ],
                         ],
                     ],
