@@ -11,6 +11,13 @@ use OutOfRangeException;
 use RangeException;
 use WP_Post;
 
+/**
+ * Functionality for retrieving Quiz entities.
+ *
+ * @since [*next-version*]
+ *
+ * @package SQuiz
+ */
 trait Get_Quiz_Capable_Trait {
 
     /**
