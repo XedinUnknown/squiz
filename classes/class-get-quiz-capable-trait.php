@@ -32,11 +32,7 @@ trait Get_Quiz_Capable_Trait {
      * @return WP_Post The quiz post.
      */
     protected function get_quiz(int $id): WP_Post {
-        $result = get_post($id);
-
-        if (is_wp_error($result) || is_null($result)) {
-            throw new OutOfRangeException(vsprintf('Could not find quiz "%1$s"', [$id]));
-        }
+        $result = $this->get_post($id);
 
         if ($result->post_type !== $this->get_quiz_post_type_name()) {
             throw new RangeException(vsprintf('Post with ID "%1$s" is not a quiz', [$id]));
@@ -53,4 +49,17 @@ trait Get_Quiz_Capable_Trait {
      * @return string The name of the Quiz post type.
      */
     abstract protected function get_quiz_post_type_name();
+
+    /**
+     * Retrieves a post by ID.
+     *
+     * @since [*next-version*]
+     *
+     * @param int $id The ID of the post to get.
+     *
+     * @throws OutOfRangeException If post for the specified ID does not exist.
+     *
+     * @return WP_Post The quiz post.
+     */
+    abstract protected function get_post(int $id): WP_Post;
 }

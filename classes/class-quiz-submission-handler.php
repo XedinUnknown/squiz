@@ -23,6 +23,9 @@ class Quiz_Submission_Handler extends Handler
     use Get_Quiz_Capable_Trait;
 
     /* @since [*next-version*] */
+    use Get_Post_Capable_Trait;
+
+    /* @since [*next-version*] */
     use Get_Submission_Uid_Capable_Trait;
 
     /**

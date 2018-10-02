@@ -29,6 +29,9 @@ class Quiz_Shortcode_Handler extends Handler
     use Get_Quiz_Capable_Trait;
 
     /* @since [*next-version*] */
+    use Get_Post_Capable_Trait;
+
+    /* @since [*next-version*] */
     use Group_By_Term_Capable_Trait;
 
     /* @since [*next-version*] */
