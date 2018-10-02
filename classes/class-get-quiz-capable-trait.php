@@ -24,7 +24,7 @@ trait Get_Quiz_Capable_Trait {
      *
      * @return WP_Post The quiz post.
      */
-    protected function get_quiz($id) {
+    protected function get_quiz(int $id): WP_Post {
         $result = get_post($id);
 
         if (is_wp_error($result) || is_null($result)) {
