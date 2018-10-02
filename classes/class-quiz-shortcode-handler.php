@@ -29,7 +29,7 @@ class Quiz_Shortcode_Handler extends Handler
     use Get_Quiz_Capable_Trait;
 
     /**
-     * Qanda_Fields_Types_Handler constructor.
+     * Quiz_Shortcode_Handler constructor.
      *
      * @since [*next-version*]
      *
