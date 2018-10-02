@@ -28,6 +28,12 @@ class Quiz_Shortcode_Handler extends Handler
     /* @since [*next-version*] */
     use Get_Quiz_Capable_Trait;
 
+    /* @since [*next-version*] */
+    use Group_By_Term_Capable_Trait;
+
+    /* @since [*next-version*] */
+    use Get_Terms_For_Post_Id_Capable_Trait;
+
     /**
      * Quiz_Shortcode_Handler constructor.
      *
@@ -171,38 +177,10 @@ class Quiz_Shortcode_Handler extends Handler
      * @param WP_Post[] $questions The questions to group.
      *
      * @return array<int, array<WP_Post>> Lists of question posts, grouped by question group ID.
-     * Questions that dont' have any group assigned will be grouped under `0`.
+     * Questions that don't have any group assigned will be grouped under `0`.
      */
     protected function get_grouped_questions($questions) {
-        $grouped = [];
-        $group_taxonomy_name = $this->get_config('question_groups_taxonomy');
-
-        foreach ($questions as $question) {
-            $groups = wp_get_post_terms($question->ID, $group_taxonomy_name);
-            /* @var $groups WP_Term[] */
-
-            if (!count($groups)) {
-                $term_id = 0;
-                if (!isset($grouped[$term_id])) {
-                    $grouped[$term_id] = [];
-                }
-
-                $grouped[$term_id][] = $question;
-                continue;
-            }
-
-            foreach ($groups as $group) {
-                $term_id = (int) $group->term_id;
-
-                if (!isset($grouped[$term_id])) {
-                    $grouped[$term_id] = [];
-                }
-
-                $grouped[$term_id][] = $question;
-            }
-        }
-
-        return $grouped;
+        return $this->group_by_term($questions, [$this->get_config('question_groups_taxonomy')]);
     }
 
     /**
