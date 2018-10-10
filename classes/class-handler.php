@@ -14,14 +14,8 @@ namespace XedinUnknown\SQuiz;
  */
 abstract class Handler {
 
-	/**
-	 * The container of services and configuration used by the plugin.
-	 *
-	 * @since 0.1
-	 *
-	 * @var DI_Container
-	 */
-	protected $config;
+    /* @since [*next-version*] */
+    use Config_Aware_Trait;
 
 	/**
 	 * Handler constructor.
@@ -31,7 +25,7 @@ abstract class Handler {
 	 * @param DI_Container $config The configuration of this plugin.
 	 */
 	public function __construct( DI_Container $config ) {
-		$this->config = $config;
+		$this->_set_config_container($config);
 	}
 
 	/**
@@ -56,19 +50,6 @@ abstract class Handler {
 	 */
 	public function __invoke() {
 		return $this->run();
-	}
-
-	/**
-	 * Retrieves a config value.
-	 *
-	 * @since 0.1
-	 *
-	 * @param string $key The key of the config value to retrieve.
-	 *
-	 * @return mixed The config value.
-	 */
-	public function get_config( $key ) {
-		return $this->config->get( $key );
 	}
 
 	/**
