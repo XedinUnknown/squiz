@@ -246,7 +246,7 @@ return function ( $base_path, $base_url ) {
                         'show_in_menu'  => true,
                         "menu_icon"     => 'dashicons-format-aside',
                         'capability_type' => 'post',
-                        'supports'      => 'title',
+                        'supports'      => ['title', 'editor'],
                         'has_archive'   => false,
                         'rewrite'       => false,
                     ],
