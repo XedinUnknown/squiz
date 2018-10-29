@@ -10,6 +10,7 @@ use XedinUnknown\SQuiz\Fields_Types_Handler;
 use XedinUnknown\SQuiz\PHP_Template;
 use XedinUnknown\SQuiz\Quiz_Shortcode_Handler;
 use XedinUnknown\SQuiz\Quiz_Submission_Handler;
+use XedinUnknown\SQuiz\Submission_Result_Output_Handler;
 use XedinUnknown\SQuiz\Submission_Document_Creator;
 use XedinUnknown\SQuiz\Template_Block;
 
@@ -77,6 +78,7 @@ return function ( $base_path, $base_url ) {
                     $c->get('fields_types_handler'),
                     $c->get('quiz_shortcode_handler'),
                     $c->get('quiz_submission_handler'),
+                    $c->get('quiz_submission_result_output_handler'),
 				];
 			},
 
@@ -330,6 +332,10 @@ return function ( $base_path, $base_url ) {
 
             'quiz_submission_handler'               => function ( DI_Container $c ) {
                 return new Quiz_Submission_Handler($c);
+            },
+
+            'quiz_submission_result_output_handler'      => function ( DI_Container $c ) {
+                return new Submission_Result_Output_Handler($c, $c->get('quiz_submission_document_creator'));
             },
 
             'quiz_submission_document_creator'      => function ( DI_Container $c ) {
