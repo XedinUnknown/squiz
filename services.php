@@ -303,6 +303,24 @@ return function ( $base_path, $base_url ) {
                     ],
                 ];
             },
+            'course_groups_max_courses_field'       => 'max_courses',
+            'taxonomy_metaboxes'                    => function (DI_Container $c) {
+                return [
+                    [
+                        'title'             => __('Quiz Submissions'),
+                        'taxonomies'        => $c->get('course_groups_taxonomy'),
+                        'fields'            => [
+                            [
+                                'name'              => __('Max Courses'),
+                                'id'                => $c->get('course_groups_max_courses_field'),
+                                'label_description' => __('A non-negative integer. Set to 0 (zero) for unlimited.'),
+                                'std'               => 0,
+                                'type'              => 'number',
+                            ],
+                        ],
+                    ],
+                ];
+            },
             'quiz_shortcode_name'                   => 'squiz',
             'submission_answer_groups_var_name'     => 'squiz-answers',
             'submission_field_quiz_id'              => 'squiz_quiz_id',
