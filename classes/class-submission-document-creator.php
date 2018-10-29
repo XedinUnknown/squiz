@@ -150,6 +150,7 @@ class Submission_Document_Creator {
         $answer_groups = json_decode($submission->{$this->sf_grouped_answers});
         $quiz_id = $submission->{$this->sf_quiz_id};
         $quiz = $this->get_quiz($quiz_id);
+        $quiz->post_content = apply_filters( 'the_content', $quiz->post_content );
 
         $answer_counts = $this->count_grouped($answer_groups);
         $answer_ids = array_keys($answer_counts);
