@@ -33,6 +33,17 @@ return function ( $base_path, $base_url ) {
 			'translations_dir'                => '/languages',
 			'text_domain'                     => 'squiz',
 
+            'template_path_factory'           => function ( DI_Container $c ) {
+		        $baseDir = rtrim( $c->get( 'base_dir' ), '\\/' );
+                $templatesDir = trim( $c->get( 'templates_dir' ), '\\/' );
+
+                return function ( $name ) use ( $baseDir, $templatesDir ) {
+                    $name = trim( $name, '\\/');
+
+                    return "$baseDir/$templatesDir/$name";
+                };
+            },
+
 			/*
 			 * Makes templates.
 			 *
@@ -298,6 +309,13 @@ return function ( $base_path, $base_url ) {
 
             'quiz_submission_handler'               => function ( DI_Container $c ) {
                 return new Quiz_Submission_Handler($c);
+            },
+
+            'quiz_submission_document_template'      => function ( DI_Container $c ) {
+                $templateName = $c->get('submission_document_template_name');
+                $templatePath = $c->get('template_path_factory')("$templateName.php");
+
+                return new PHP_Template($templatePath);
             },
 		];
 };
