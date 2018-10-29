@@ -7,6 +7,8 @@
 
 namespace XedinUnknown\SQuiz;
 
+use Throwable;
+
 /**
  * A base class for all handlers.
  *
@@ -16,6 +18,9 @@ abstract class Handler {
 
     /* @since [*next-version*] */
     use Config_Aware_Trait;
+
+    /* @since [*next-version*] */
+    use Get_Template_Capable_Trait;
 
 	/**
 	 * Handler constructor.
@@ -58,6 +63,8 @@ abstract class Handler {
 	 * @since 0.1
 	 *
 	 * @param string $path The path relative to the JS directory.
+     *
+     * @throws Throwable If problem retrieving.
 	 *
 	 * @return string The absolute URL to the JS directory.
 	 */
@@ -73,6 +80,8 @@ abstract class Handler {
 	 * @since 0.1
 	 *
 	 * @param string $path The path relative to the CSS directory.
+     *
+     * @throws Throwable If problem retrieving.
 	 *
 	 * @return string The absolute URL to the CSS directory.
 	 */
@@ -83,31 +92,14 @@ abstract class Handler {
 	}
 
 	/**
-	 * Gets the template for the specified key.
-	 *
-	 * @since 0.1
-	 *
-	 * @param string $template The template key.
-	 *
-	 * @return PHP_Template The template for the key.
-	 */
-	protected function get_template( $template ) {
-		$factory       = $this->get_config( 'template_factory' );
-		$base_dir      = $this->get_config( 'base_dir' );
-		$templates_dir = $this->get_config( 'templates_dir' );
-
-		$path = "$base_dir/$templates_dir/$template.php";
-
-		return $factory( $path );
-	}
-
-	/**
 	 * Creates a new template block.
 	 *
 	 * @since 0.1
 	 *
 	 * @param PHP_Template|string $template The template or template key.
 	 * @param array               $context The context for the template.
+     *
+     * @throws Throwable If problem retrieving.
 	 *
 	 * @return Template_Block The new block.
 	 */
