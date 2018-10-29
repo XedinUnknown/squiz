@@ -228,7 +228,7 @@ return function ( $base_path, $base_url ) {
                         'exclude_from_search' => false,
                         "menu_icon"     => 'dashicons-welcome-learn-more',
                         'capability_type' => 'post',
-                        'supports'      => 'title',
+                        'supports'      => ['title', 'editor'],
                         'has_archive'   => false,
                         'rewrite'       => false,
                     ],
