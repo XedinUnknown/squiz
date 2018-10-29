@@ -302,6 +302,8 @@ class Submission_Document_Creator {
         ]);
 
         return $this->index_list($terms, function ($value) {
+            /* @var $value WP_Term */
+            $value->long_description = rwmb_meta( 'long_description', ['object_type' => 'term'], $value->term_id );
             return $value;
         }, function (WP_Term $value) {
             return $value->term_id;
@@ -357,4 +359,6 @@ class Submission_Document_Creator {
 
         return $courses;
     }
+
+
 }
