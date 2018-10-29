@@ -52,9 +52,8 @@ $submission = $c('submission');
  */
 $course_groups = $c('course_groups');
 ?>
+<?php echo $quiz->post_content ?>
 
-<h1><?php echo get_the_title($quiz) ?></h1>
-<p><?php echo esc_html(__('Submission', 'squiz')) ?>: <span class="submission-uid"><?php echo esc_html($submission->post_name) ?></span></p>
 <?php foreach ($grouped_course_ids as $course_group_id => $course_ids): ?>
     <?php $course_group = $course_groups[$course_group_id] ?>
     <h2><?php echo esc_html($course_group->name) ?></h2>
