@@ -60,5 +60,6 @@ $course_groups = $c('course_groups');
     <?php foreach ($course_ids as $course_id): ?>
         <?php $course = $courses[$course_id] ?>
         <h3><?php echo get_the_title($course) ?></h3>
+        <?php echo $course->post_content ?>
     <?php endforeach; ?>
 <?php endforeach ?>
