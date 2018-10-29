@@ -75,6 +75,35 @@ trait Fields_Types_Register_Capable_Trait
     }
 
     /**
+     * Adds metabox entries to current list.
+     *
+     * Mostly intended to handle the `rwmb_meta_boxes` filter.
+     *
+     * @since [*next-version*]
+     * @see https://docs.metabox.io/extensions/mb-term-meta/#example
+     *
+     * @param int[] $metaboxes The current list of metabox entries.
+     *
+     * @return int[] The new list of metabox entries.
+     */
+    protected function add_metaboxes($metaboxes) {
+        return array_merge($metaboxes, $this->get_metaboxes());
+    }
+
+    /**
+     * Returns the metaboxes to create.
+     *
+     * @since [*next-version*]
+     *
+     * @see https://docs.metabox.io/extensions/mb-term-meta/
+     *
+     * @return array[] An array of MetaBox entries, each describing a metabox.
+     */
+    protected function get_metaboxes():array {
+        return (array) $this->get_config('taxonomy_metaboxes');
+    }
+
+    /**
      * Returns the relationships to create.
      *
      * @since [*next-version*]
