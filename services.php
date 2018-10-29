@@ -329,6 +329,7 @@ return function ( $base_path, $base_url ) {
             'submission_answer_groups_var_name'     => 'squiz-answers',
             'submission_field_quiz_id'              => 'squiz_quiz_id',
             'submission_field_grouped_answers'      => 'squiz_grouped_answers',
+            'submission_document_template_name'     => 'quiz-result',
 
             'quiz_submission_handler'               => function ( DI_Container $c ) {
                 return new Quiz_Submission_Handler($c);
