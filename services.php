@@ -308,6 +308,7 @@ return function ( $base_path, $base_url ) {
                 ];
             },
             'course_groups_max_courses_field'       => 'max_courses',
+            'course_groups_description_field'       => 'long_description',
             'taxonomy_metaboxes'                    => function (DI_Container $c) {
                 return [
                     [
@@ -320,6 +321,13 @@ return function ( $base_path, $base_url ) {
                                 'label_description' => __('A non-negative integer. Set to 0 (zero) for unlimited.'),
                                 'std'               => 0,
                                 'type'              => 'number',
+                            ],
+                            [
+                                'name'              => __('Long Description'),
+                                'id'                => $c->get('course_groups_description_field'),
+                                'label_description' => __('The extended description of the course group.'),
+                                'std'               => '',
+                                'type'              => 'wysiwyg',
                             ],
                         ],
                     ],
