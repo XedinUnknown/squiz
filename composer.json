@@ -19,7 +19,8 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3",
         "wpackagist-plugin/meta-box": "^4.14",
         "wpackagist-plugin/mb-relationships": "^1.4",
-        "wpackagist-plugin/simple-taxonomy-ordering": "1.2.7"
+        "wpackagist-plugin/simple-taxonomy-ordering": "1.2.7",
+        "plasticmind/mb-term-meta": "*"
     },
     "scripts": {
         "cscheck": "phpcs -s -n",

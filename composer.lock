@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4db83036568e0b245a8c913f298444dc",
+    "content-hash": "feb28ff28665c5b67f1874f9f855647e",
     "packages": [],
     "packages-dev": [
         {
@@ -194,6 +194,29 @@
                 "tests"
             ],
             "time": "2017-12-06T16:27:17+00:00"
+        },
+        {
+            "name": "plasticmind/mb-term-meta",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/plasticmind/mb-term-meta.git",
+                "reference": "d3c58ddfc768f06a7bb08e6bfecf0d25ad257473"
+            },
+            "require": {
+                "composer/installers": "^1.0"
+            },
+            "type": "wordpress-plugin",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "MetaBox.io"
+                }
+            ],
+            "description": "Add custom fields (meta data) for terms.",
+            "time": "2017-08-16T19:08:13+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
