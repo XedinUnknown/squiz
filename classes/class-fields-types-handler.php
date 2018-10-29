@@ -49,6 +49,13 @@ class Fields_Types_Handler extends Handler
                 $this->register_taxonomies($this->get_taxonomies());
             }
         );
+
+        add_filter(
+            'rwmb_meta_boxes',
+            function ($metaboxes) {
+                return $this->add_metaboxes($metaboxes);
+            }
+        );
     }
 
     /**
