@@ -10,6 +10,7 @@ use XedinUnknown\SQuiz\Fields_Types_Handler;
 use XedinUnknown\SQuiz\PHP_Template;
 use XedinUnknown\SQuiz\Quiz_Shortcode_Handler;
 use XedinUnknown\SQuiz\Quiz_Submission_Handler;
+use XedinUnknown\SQuiz\Submission_Document_Creator;
 use XedinUnknown\SQuiz\Template_Block;
 
 /**
@@ -309,6 +310,19 @@ return function ( $base_path, $base_url ) {
 
             'quiz_submission_handler'               => function ( DI_Container $c ) {
                 return new Quiz_Submission_Handler($c);
+            },
+
+            'quiz_submission_document_creator'      => function ( DI_Container $c ) {
+                return new Submission_Document_Creator(
+                    $c->get('submission_field_grouped_answers'),
+                    $c->get('submission_field_quiz_id'),
+                    $c->get('quiz_post_type'),
+                    $c->get('quiz_submission_post_type'),
+                    $c->get('course_groups_taxonomy'),
+                    $c->get('answers_to_courses_relationship_name'),
+                    $c->get('course_groups_max_courses_field'),
+                    $c->get('quiz_submission_document_template')
+                );
             },
 
             'quiz_submission_document_template'      => function ( DI_Container $c ) {
