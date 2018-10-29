@@ -48,7 +48,7 @@ trait Get_Quiz_Capable_Trait {
      *
      * @return string The name of the Quiz post type.
      */
-    abstract protected function get_quiz_post_type_name();
+    abstract protected function get_quiz_post_type_name(): string;
 
     /**
      * Retrieves a post by ID.
