@@ -10,6 +10,7 @@ namespace XedinUnknown\SQuiz;
 use DomainException;
 use Exception;
 use OutOfRangeException;
+use Throwable;
 use WP_Post;
 use WP_Query;
 use WP_Term;
@@ -53,6 +54,8 @@ class Quiz_Shortcode_Handler extends Handler
      * {@inheritdoc}
      *
      * @since [*next-version*]
+     *
+     * @throws Throwable If problem hooking.
      */
     protected function hook() {
         add_shortcode( $this->get_config('quiz_shortcode_name'), function ( $attributes, $content = '' ) {
@@ -60,8 +63,19 @@ class Quiz_Shortcode_Handler extends Handler
                 $attributes = [];
             }
 
-            return $this->get_shortcode_output( $attributes, $content );
+            $output = $this->get_shortcode_output( $attributes, $content );
+            wp_enqueue_script( 'squiz-checkbox-group', null, null, null, true );
+
+            return $output;
         } );
+
+        add_action( 'init', function () {
+            $this->register_assets();
+        } );
+    }
+
+    protected function register_assets() {
+        wp_register_script( 'squiz-checkbox-group', $this->get_js_url( 'checkbox-group.js' ), ['jquery'], $this->get_config('version') );
     }
 
     /**
