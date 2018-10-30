@@ -38,6 +38,18 @@ class Quiz_Shortcode_Handler extends Handler
     /* @since [*next-version*] */
     use Get_Terms_For_Post_Id_Capable_Trait;
 
+    /* @since [*next-version*] */
+    use Index_List_Capable_Trait;
+
+    /**
+     * The field name of a Question that contains the max answers value for that question.
+     *
+     * @since [*next-version*]
+     *
+     * @var string
+     */
+    protected $question_max_answers_field_name;
+
     /**
      * Quiz_Shortcode_Handler constructor.
      *
@@ -45,9 +57,13 @@ class Quiz_Shortcode_Handler extends Handler
      *
      * @param DI_Container $config
      */
-    public function __construct(DI_Container $config)
-    {
+    public function __construct(
+        DI_Container $config,
+        string $question_max_answers_field_name
+    ) {
         parent::__construct($config);
+
+        $this->question_max_answers_field_name = $question_max_answers_field_name;
     }
 
     /**
@@ -158,6 +174,8 @@ class Quiz_Shortcode_Handler extends Handler
         return $this->index_list(
             $questions,
             function (WP_Post $question) {
+                $question->max_answers = intval( rwmb_meta( $this->question_max_answers_field_name, [], $question->ID ) );
+
                 return $question;
             },
             function (WP_Post $question) {

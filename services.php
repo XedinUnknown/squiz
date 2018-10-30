@@ -174,7 +174,7 @@ return function ( $base_path, $base_url ) {
             },
 
             'quiz_shortcode_handler'            => function ( DI_Container $c ) {
-			    return new Quiz_Shortcode_Handler( $c );
+			    return new Quiz_Shortcode_Handler( $c, $c->get('question_max_answers_field') );
             },
 
             /*
@@ -309,6 +309,7 @@ return function ( $base_path, $base_url ) {
             },
             'course_groups_max_courses_field'       => 'max_courses',
             'course_groups_description_field'       => 'long_description',
+            'question_max_answers_field'            => 'max_answers',
             'taxonomy_metaboxes'                    => function (DI_Container $c) {
                 return [
                     [
@@ -328,6 +329,19 @@ return function ( $base_path, $base_url ) {
                                 'label_description' => __('The extended description of the course group.'),
                                 'std'               => '',
                                 'type'              => 'wysiwyg',
+                            ],
+                        ],
+                    ],
+                    [
+                        'title'             => __('Question Options'),
+                        'post_types'        => [ $c->get('question_post_type') ],
+                        'fields'            => [
+                            [
+                                'name'              => __('Max Answers'),
+                                'id'                => $c->get('question_max_answers_field'),
+                                'label_description' => __('A non-negative integer. Set to 0 (zero) for unlimited.'),
+                                'std'               => 0,
+                                'type'              => 'number',
                             ],
                         ],
                     ],
