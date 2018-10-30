@@ -89,7 +89,7 @@ class Quiz_Shortcode_Handler extends Handler
             $this->validate_attributes($attributes);
             $quiz = $this->get_quiz($attributes['id']);
             $questions = $this->get_quiz_questions($quiz->ID);
-            $question_ids = wp_list_pluck($questions, 'ID');
+            $question_ids = array_keys( $questions );
             $question_groups = $this->get_question_groups_for_questions($question_ids);
             $grouped_questions = $this->get_grouped_questions($questions);
             $grouped_answers = $this->get_grouped_answers($question_ids);
@@ -155,7 +155,15 @@ class Quiz_Shortcode_Handler extends Handler
             ],
         ]);
 
-        return $questions;
+        return $this->index_list(
+            $questions,
+            function (WP_Post $question) {
+                return $question;
+            },
+            function (WP_Post $question) {
+                return $question->ID;
+            }
+        );
     }
 
     /**
