@@ -31,10 +31,23 @@ class Submission_Result_Output_Handler extends Handler {
      */
     protected $documentCreator;
 
-    public function __construct(DI_Container $config, Submission_Document_Creator $documentCreator)
-    {
+    /**
+     * The request variable name that contains the Submission slug for display.
+     *
+     * @since [*next-version*]
+     *
+     * @var string
+     */
+    protected $submission_request_var_name;
+
+    public function __construct(
+        DI_Container $config,
+        Submission_Document_Creator $documentCreator,
+        string $submission_request_var_name
+    ) {
         parent::__construct($config);
         $this->documentCreator = $documentCreator;
+        $this->submission_request_var_name = $submission_request_var_name;
     }
 
     /**
@@ -44,8 +57,9 @@ class Submission_Result_Output_Handler extends Handler {
      */
     protected function hook() {
         add_action('init', function () {
-            if (isset($_GET['submission'])) {
-                $sid = $_GET['submission'];
+            $var_name = $this->submission_request_var_name;
+            if (isset($_GET[$var_name])) {
+                $sid = $_GET[$var_name];
                 $submissions = $this->get_posts([
                     'post_type'     => $this->get_config('quiz_submission_post_type'),
                     'name'          => $sid,

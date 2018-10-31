@@ -348,6 +348,7 @@ return function ( $base_path, $base_url ) {
                 ];
             },
             'quiz_shortcode_name'                   => 'squiz',
+            'submission_request_var_name'           => 'submission',
             'submission_answer_groups_var_name'     => 'squiz-answers',
             'submission_field_quiz_id'              => 'squiz_quiz_id',
             'submission_field_grouped_answers'      => 'squiz_grouped_answers',
@@ -358,7 +359,11 @@ return function ( $base_path, $base_url ) {
             },
 
             'quiz_submission_result_output_handler'      => function ( DI_Container $c ) {
-                return new Submission_Result_Output_Handler($c, $c->get('quiz_submission_document_creator'));
+                return new Submission_Result_Output_Handler(
+                    $c,
+                    $c->get('quiz_submission_document_creator'),
+                    $c->get('submission_request_var_name')
+                );
             },
 
             'quiz_submission_document_creator'      => function ( DI_Container $c ) {
