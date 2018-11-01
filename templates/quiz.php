@@ -18,11 +18,13 @@ $grouped_questions = $c('grouped_questions');
 $grouped_answers = $c('grouped_answers');
 /* @var $grouped_answers array<int, array<int, WP_Post>> */
 $answer_groups_name = $c('submission_answer_groups_var_name');
+/* @var $submit_url string */
+$submit_url = $c('submit_url');
 ?>
 <?php $quiz_id = $quiz->ID ?>
 <div class="quiz" id="quiz-<?php echo esc_attr($quiz_id) ?>">
     <h2 class="quiz-title"><?php echo get_the_title($quiz) ?></h2>
-    <form action="" method="post">
+    <form action="<?php echo esc_attr($submit_url) ?>" method="post">
         <input type="hidden" name="quiz_id" value="<?php echo esc_attr($quiz_id) ?>" />
     <?php if ( count($question_groups) || isset($grouped_questions[0]) ): ?>
         <ul class="question-groups">

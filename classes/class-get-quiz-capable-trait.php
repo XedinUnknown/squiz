@@ -9,6 +9,7 @@ namespace XedinUnknown\SQuiz;
 
 use OutOfRangeException;
 use RangeException;
+use Throwable;
 use WP_Post;
 
 /**
@@ -28,6 +29,7 @@ trait Get_Quiz_Capable_Trait {
      * @param int $id The ID of the quiz to get.
      *
      * @throws OutOfRangeException If quiz for the specified ID does not exist.
+     * @throws Throwable If problem retrieving
      *
      * @return WP_Post The quiz post.
      */
@@ -45,6 +47,8 @@ trait Get_Quiz_Capable_Trait {
      * Retrieves the name of the Quiz post type.
      *
      * @since [*next-version*]
+     *
+     * @throws Throwable If problem retrieving.
      *
      * @return string The name of the Quiz post type.
      */

@@ -78,7 +78,6 @@ return function ( $base_path, $base_url ) {
                     $c->get('fields_types_handler'),
                     $c->get('quiz_shortcode_handler'),
                     $c->get('quiz_submission_handler'),
-                    $c->get('quiz_submission_result_output_handler'),
 				];
 			},
 
@@ -174,7 +173,12 @@ return function ( $base_path, $base_url ) {
             },
 
             'quiz_shortcode_handler'            => function ( DI_Container $c ) {
-			    return new Quiz_Shortcode_Handler( $c, $c->get('question_max_answers_field') );
+			    return new Quiz_Shortcode_Handler(
+			        $c,
+                    $c->get('quiz_submission_document_creator'),
+                    $c->get('submission_request_var_name'),
+                    $c->get('question_max_answers_field')
+                );
             },
 
             /*
@@ -355,13 +359,8 @@ return function ( $base_path, $base_url ) {
             'submission_document_template_name'     => 'quiz-result',
 
             'quiz_submission_handler'               => function ( DI_Container $c ) {
-                return new Quiz_Submission_Handler($c);
-            },
-
-            'quiz_submission_result_output_handler'      => function ( DI_Container $c ) {
-                return new Submission_Result_Output_Handler(
+                return new Quiz_Submission_Handler(
                     $c,
-                    $c->get('quiz_submission_document_creator'),
                     $c->get('submission_request_var_name')
                 );
             },

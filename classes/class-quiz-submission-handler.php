@@ -8,6 +8,7 @@
 namespace XedinUnknown\SQuiz;
 
 use RuntimeException;
+use Throwable;
 
 
 /**
@@ -29,15 +30,27 @@ class Quiz_Submission_Handler extends Handler
     use Get_Submission_Uid_Capable_Trait;
 
     /**
-     * Qanda_Fields_Types_Handler constructor.
+     * The request variable name that contains the Submission slug for display.
+     *
+     * @since [*next-version*]
+     *
+     * @var string
+     */
+    protected $submission_request_var_name;
+
+    /**
+     * Quiz_Submission_Handler constructor.
      *
      * @since [*next-version*]
      *
      * @param DI_Container $config
      */
-    public function __construct(DI_Container $config)
-    {
+    public function __construct(
+        DI_Container $config,
+        string $submission_request_var_name
+    ) {
         parent::__construct($config);
+        $this->submission_request_var_name = $submission_request_var_name;
     }
 
     /**
@@ -54,8 +67,18 @@ class Quiz_Submission_Handler extends Handler
         } );
 
         add_action( 'squiz_submitted', function ($quiz_id, $answer_groups) {
-            $this->create_quiz_submission($quiz_id, $answer_groups);
+            $submission_id = $this->create_quiz_submission($quiz_id, $answer_groups);
+            do_action( 'squiz_submission_created', $submission_id );
         }, 10, 2 );
+
+        add_action( 'squiz_submission_created', function (int $submission_id) {
+            $submission = $this->get_post($submission_id);
+            $url = add_query_arg([
+                $this->submission_request_var_name => $submission->post_name,
+            ]);
+            wp_redirect($url);
+            exit();
+        }, 10, 1 );
     }
 
     /**
@@ -69,6 +92,7 @@ class Quiz_Submission_Handler extends Handler
      * @param array<int, array<int, int>> $answer_groups A map of question IDs to lists of answer IDs.
      *
      * @throws RuntimeException If submission could not be created.
+     * @throws Throwable If problems creating.
      *
      * @return int The ID of the new submission post.
      */
