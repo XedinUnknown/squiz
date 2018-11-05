@@ -7,7 +7,6 @@
 
 namespace XedinUnknown\SQuiz;
 
-
 /**
  * Responsible for registering questions and answers related types and relationships between them.
  *
@@ -15,81 +14,83 @@ namespace XedinUnknown\SQuiz;
  *
  * @package SQuiz
  */
-class Fields_Types_Handler extends Handler
-{
-    /* @since [*next-version*] */
-    use Fields_Types_Register_Capable_Trait;
+class Fields_Types_Handler extends Handler {
 
-    /**
-     * Qanda_Fields_Types_Handler constructor.
-     *
-     * @since [*next-version*]
-     *
-     * @param DI_Container $config
-     */
-    public function __construct(DI_Container $config)
-    {
-        parent::__construct($config);
-    }
+	/* @since [*next-version*] */
+	use Fields_Types_Register_Capable_Trait;
 
-    /**
-     * {@inheritdoc}
-     *
-     * @since [*next-version*]
-     */
-    protected function hook() {
-        add_action( 'mb_relationships_init', function () {
-            $this->register_relationships($this->get_relationships());
-        } );
+	/**
+	 * Qanda_Fields_Types_Handler constructor.
+	 *
+	 * @since [*next-version*]
+	 *
+	 * @param DI_Container $config
+	 */
+	public function __construct( DI_Container $config ) {
+		parent::__construct( $config );
+	}
 
-        add_action(
-            'init',
-            function () {
-                $this->register_post_types($this->get_post_types());
-                $this->register_taxonomies($this->get_taxonomies());
-            }
-        );
+	/**
+	 * {@inheritdoc}
+	 *
+	 * @since [*next-version*]
+	 */
+	protected function hook() {
+		add_action(
+			'mb_relationships_init',
+			function () {
+				$this->register_relationships( $this->get_relationships() );
+			}
+		);
 
-        add_filter(
-            'rwmb_meta_boxes',
-            function ($metaboxes) {
-                return $this->add_metaboxes($metaboxes);
-            }
-        );
-    }
+		add_action(
+			'init',
+			function () {
+				$this->register_post_types( $this->get_post_types() );
+				$this->register_taxonomies( $this->get_taxonomies() );
+			}
+		);
 
-    /**
-     * Returns the relationships to create.
-     *
-     * @since [*next-version*]
-     *
-     * @see https://docs.metabox.io/extensions/mb-relationships/
-     *
-     * @return array[] An array of MetaBox relationships, where key is the relationship ID, and value is other relationship configuration.
-     */
-    protected function get_relationships() {
-        return (array) $this->get_config('field_relationships');
-    }
+		add_filter(
+			'rwmb_meta_boxes',
+			function ( $metaboxes ) {
+				return $this->add_metaboxes( $metaboxes );
+			}
+		);
+	}
 
-    /**
-     * Retrieves post type configurations.
-     *
-     * @since [*next-version*]
-     *
-     * @return array[] An array of post type configurations, where key is the post type name, and the value is post type arguments.
-     */
-    protected function get_post_types() {
-        return (array) $this->get_config('post_types');
-    }
+	/**
+	 * Returns the relationships to create.
+	 *
+	 * @since [*next-version*]
+	 *
+	 * @see https://docs.metabox.io/extensions/mb-relationships/
+	 *
+	 * @return array[] An array of MetaBox relationships, where key is the relationship ID, and value is other relationship configuration.
+	 */
+	protected function get_relationships() {
+		return (array) $this->get_config( 'field_relationships' );
+	}
 
-    /**
-     * Retrieves taxonomy configurations.
-     *
-     * @since [*next-version*]
-     *
-     * @return array[] An array of taxonomy configurations, where key is the taxonomy name, and the value is taxonomy arguments.
-     */
-    protected function get_taxonomies() {
-        return (array) $this->get_config('taxonomies');
-    }
+	/**
+	 * Retrieves post type configurations.
+	 *
+	 * @since [*next-version*]
+	 *
+	 * @return array[] An array of post type configurations, where key is the post type name, and the value is post type arguments.
+	 */
+	protected function get_post_types() {
+		return (array) $this->get_config( 'post_types' );
+	}
+
+	/**
+	 * Retrieves taxonomy configurations.
+	 *
+	 * @since [*next-version*]
+	 *
+	 * @return array[] An array of taxonomy configurations, where key is the taxonomy name, and the value is taxonomy arguments.
+	 */
+	protected function get_taxonomies() {
+		return (array) $this->get_config( 'taxonomies' );
+	}
 }

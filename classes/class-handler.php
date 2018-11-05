@@ -16,11 +16,11 @@ use Throwable;
  */
 abstract class Handler {
 
-    /* @since [*next-version*] */
-    use Config_Aware_Trait;
+	/* @since [*next-version*] */
+	use Config_Aware_Trait;
 
-    /* @since [*next-version*] */
-    use Get_Template_Capable_Trait;
+	/* @since [*next-version*] */
+	use Get_Template_Capable_Trait;
 
 	/**
 	 * Handler constructor.
@@ -30,7 +30,7 @@ abstract class Handler {
 	 * @param DI_Container $config The configuration of this plugin.
 	 */
 	public function __construct( DI_Container $config ) {
-		$this->_set_config_container($config);
+		$this->_set_config_container( $config );
 	}
 
 	/**
@@ -63,8 +63,8 @@ abstract class Handler {
 	 * @since 0.1
 	 *
 	 * @param string $path The path relative to the JS directory.
-     *
-     * @throws Throwable If problem retrieving.
+	 *
+	 * @throws Throwable If problem retrieving.
 	 *
 	 * @return string The absolute URL to the JS directory.
 	 */
@@ -80,8 +80,8 @@ abstract class Handler {
 	 * @since 0.1
 	 *
 	 * @param string $path The path relative to the CSS directory.
-     *
-     * @throws Throwable If problem retrieving.
+	 *
+	 * @throws Throwable If problem retrieving.
 	 *
 	 * @return string The absolute URL to the CSS directory.
 	 */
@@ -98,8 +98,8 @@ abstract class Handler {
 	 *
 	 * @param PHP_Template|string $template The template or template key.
 	 * @param array               $context The context for the template.
-     *
-     * @throws Throwable If problem retrieving.
+	 *
+	 * @throws Throwable If problem retrieving.
 	 *
 	 * @return Template_Block The new block.
 	 */

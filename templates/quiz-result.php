@@ -14,7 +14,7 @@
  *
  * @var $quiz WP_Post
  */
-$quiz = $c('quiz');
+$quiz = $c( 'quiz' );
 
 /**
  * A map of Course ID to the Course post.
@@ -23,7 +23,7 @@ $quiz = $c('quiz');
  *
  * @var $courses WP_Post[]
  */
-$courses = $c('courses');
+$courses = $c( 'courses' );
 
 /**
  * A map of Course Group IDs to lists of Course IDs for that group.
@@ -32,7 +32,7 @@ $courses = $c('courses');
  *
  * @var $grouped_course_ids array<int, array<int, int>>
  */
-$grouped_course_ids = $c('grouped_course_ids');
+$grouped_course_ids = $c( 'grouped_course_ids' );
 
 /**
  * The Submission post for which the result is being rendered.
@@ -41,7 +41,7 @@ $grouped_course_ids = $c('grouped_course_ids');
  *
  * @var $submission WP_Post
  */
-$submission = $c('submission');
+$submission = $c( 'submission' );
 
 /**
  * A map of Course Group IDs to Course Group terms.
@@ -50,21 +50,17 @@ $submission = $c('submission');
  *
  * @var $course_groups WP_Term[]
  */
-$course_groups = $c('course_groups');
+$course_groups = $c( 'course_groups' );
 ?>
-<!--
-<h1><?php echo get_the_title($quiz) ?></h1>
-<p><?php echo esc_html(__('Submission', 'squiz')) ?>: <span class="submission-uid"><?php echo esc_html($submission->post_name) ?></span></p>
--->
-<?php echo $quiz->post_content ?>
+<?php echo wp_kses_post( $quiz->post_content ); ?>
 
-<?php foreach ($grouped_course_ids as $course_group_id => $course_ids): ?>
-    <?php $course_group = $course_groups[$course_group_id] ?>
-    <h2><?php echo esc_html($course_group->name) ?></h2>
-    <?php echo $course_group->long_description ?>
-    <?php foreach ($course_ids as $course_id): ?>
-        <?php $course = $courses[$course_id] ?>
-        <h3><?php echo get_the_title($course) ?></h3>
-        <?php echo $course->post_content ?>
-    <?php endforeach; ?>
+<?php foreach ( $grouped_course_ids as $course_group_id => $course_ids ) : ?>
+	<?php $course_group = $course_groups[ $course_group_id ]; ?>
+	<h2><?php echo esc_html( $course_group->name ); ?></h2>
+	<?php echo wp_kses_post( $course_group->long_description ); ?>
+	<?php foreach ( $course_ids as $course_id ) : ?>
+		<?php $course = $courses[ $course_id ]; ?>
+		<h3><?php echo get_the_title( $course ); ?></h3>
+		<?php echo wp_kses_post( $course->post_content ); ?>
+	<?php endforeach; ?>
 <?php endforeach ?>
