@@ -1,6 +1,6 @@
 <?php
 /**
- * DI_Container class.
+ * Template_Block class.
  *
  * @package SQuiz
  */
