@@ -63,7 +63,7 @@ class Callback_Block {
 		try {
 			ob_start();
 
-			if ( !is_callable( $this->callback ) ) {
+            if ( ! is_callable( $this->callback ) ) {
                 throw new RuntimeException( sprintf( 'Callback must be callable' ) );
             }
 
@@ -85,6 +85,6 @@ class Callback_Block {
      * @return string The string representation of the error.
      */
 	protected function get_error_output( Exception $e ) {
-	    return (string) $e->getMessage() . PHP_EOL . $e->getTraceAsString();;
+        return (string) $e->getMessage() . PHP_EOL . $e->getTraceAsString();
     }
 }

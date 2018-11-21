@@ -31,7 +31,7 @@ $before_questions = $c( 'before_questions' );
 	<form action="<?php echo esc_attr( $submit_url ); ?>" method="post">
 		<input type="hidden" name="quiz_id" value="<?php echo esc_attr( $quiz_id ); ?>" />
 	<?php if ( count( $question_groups ) || isset( $grouped_questions[0] ) ) : ?>
-        <?php echo $before_questions; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+		<?php echo $before_questions; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 		<ul class="question-groups">
 		<?php foreach ( $question_groups as $group ) : ?>
 			<?php $group_id = $group->term_id; ?>
@@ -77,7 +77,7 @@ $before_questions = $c( 'before_questions' );
 			<?php endif ?>
 		<?php endforeach ?>
 		</ul>
-        <?php echo $after_questions; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+		<?php echo $after_questions; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 		<div class="form-actions">
 			<input type="submit" value="Submit" />
 		</div>

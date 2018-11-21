@@ -195,12 +195,16 @@ class Quiz_Shortcode_Handler extends Handler {
 		$grouped_questions = $this->get_grouped_questions( $questions );
 		$grouped_answers   = $this->get_grouped_answers( $question_ids );
 		$cbBlockFactory    = $this->get_config( 'callback_block_factory' );
-        $before_questions  = $cbBlockFactory( function () use ($quiz, $questions, $grouped_answers) {
-            echo do_action( 'squiz_before_questions', $quiz, $questions, $grouped_answers );
-        } );
-        $after_questions   = $cbBlockFactory( function () use ($quiz, $questions, $grouped_answers) {
-            echo do_action( 'squiz_after_questions', $quiz, $questions, $grouped_answers );
-        } );
+		$before_questions  = $cbBlockFactory(
+			function () use ( $quiz, $questions, $grouped_answers ) {
+					echo do_action( 'squiz_before_questions', $quiz, $questions, $grouped_answers );
+			}
+		);
+		$after_questions   = $cbBlockFactory(
+			function () use ( $quiz, $questions, $grouped_answers ) {
+					echo do_action( 'squiz_after_questions', $quiz, $questions, $grouped_answers );
+			}
+		);
 
 		return $this->get_template( 'quiz' )->render(
 			[
@@ -210,8 +214,8 @@ class Quiz_Shortcode_Handler extends Handler {
 				'grouped_answers'                   => $grouped_answers,
 				'submission_answer_groups_var_name' => $this->get_config( 'submission_answer_groups_var_name' ),
 				'submit_url'                        => home_urL( add_query_arg( [] ) ),
-                'after_questions'                   => $after_questions,
-                'before_questions'                  => $before_questions,
+				'after_questions'                   => $after_questions,
+				'before_questions'                  => $before_questions,
 			]
 		);
 	}

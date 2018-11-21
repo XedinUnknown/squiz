@@ -31,7 +31,14 @@ trait Fields_Types_Register_Capable_Trait {
 	 */
 	protected function register_relationships( $relationships ) {
 		foreach ( $relationships as $id => $config ) {
-			$result = MB_Relationships_API::register( array_merge( [ 'id' => $id ], $config ) );
+			$result = MB_Relationships_API::register(
+				array_merge(
+					[
+						'id' => $id,
+					],
+					$config
+				)
+			);
 			if ( ! ( $result instanceof MB_Relationships_Relationship ) ) {
 				throw new Exception( vsprintf( 'Could not register relationship "%1$s"', [ $id ] ) );
 			}

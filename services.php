@@ -58,27 +58,27 @@ return function ( $base_path, $base_url ) {
 				};
 			},
 
-            /*
-             * Makes blocs.
-             *
-             * @since 0.1
-             */
-            'block_factory'                          => function ( DI_Container $c ) {
-                return function ( PHP_Template $template, $context ) {
-                    return new Template_Block( $template, $context );
-                };
-            },
+			/*
+			 * Makes blocs.
+			 *
+			 * @since 0.1
+			 */
+			'block_factory'                          => function ( DI_Container $c ) {
+				return function ( PHP_Template $template, $context ) {
+					return new Template_Block( $template, $context );
+				};
+			},
 
-            /*
-             * Makes callback blocks.
-             *
-             * @since 0.1
-             */
-            'callback_block_factory'                          => function ( DI_Container $c ) {
-                return function ( callable $callback, $context = [] ) {
-                    return new Callback_Block( $callback, $context );
-                };
-            },
+			/*
+			 * Makes callback blocks.
+			 *
+			 * @since 0.1
+			 */
+			'callback_block_factory'                 => function ( DI_Container $c ) {
+				return function ( callable $callback, $context = [] ) {
+					return new Callback_Block( $callback, $context );
+				};
+			},
 
 			/*
 			 * List of handlers to run.
