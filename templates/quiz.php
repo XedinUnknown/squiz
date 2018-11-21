@@ -20,6 +20,10 @@ $grouped_answers = $c( 'grouped_answers' );
 $answer_groups_name = $c( 'submission_answer_groups_var_name' );
 /* @var $submit_url string */
 $submit_url = $c( 'submit_url' );
+/* @var $after_questions string */
+$after_questions = $c( 'after_questions' );
+/* @var $before_questions string */
+$before_questions = $c( 'before_questions' );
 ?>
 <?php $quiz_id = $quiz->ID; ?>
 <div class="quiz" id="quiz-<?php echo esc_attr( $quiz_id ); ?>">
@@ -27,6 +31,7 @@ $submit_url = $c( 'submit_url' );
 	<form action="<?php echo esc_attr( $submit_url ); ?>" method="post">
 		<input type="hidden" name="quiz_id" value="<?php echo esc_attr( $quiz_id ); ?>" />
 	<?php if ( count( $question_groups ) || isset( $grouped_questions[0] ) ) : ?>
+        <?php echo $before_questions; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 		<ul class="question-groups">
 		<?php foreach ( $question_groups as $group ) : ?>
 			<?php $group_id = $group->term_id; ?>
@@ -72,6 +77,7 @@ $submit_url = $c( 'submit_url' );
 			<?php endif ?>
 		<?php endforeach ?>
 		</ul>
+        <?php echo $after_questions; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 		<div class="form-actions">
 			<input type="submit" value="Submit" />
 		</div>
