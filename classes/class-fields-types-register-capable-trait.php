@@ -9,7 +9,7 @@ namespace XedinUnknown\SQuiz;
 
 use Exception;
 use MB_Relationships_API;
-use MB_Relationships_Relationship;
+use MBR_Relationship;
 
 /**
  * Functionality for registering types and relationships between them.
@@ -39,7 +39,7 @@ trait Fields_Types_Register_Capable_Trait {
 					$config
 				)
 			);
-			if ( ! ( $result instanceof MB_Relationships_Relationship ) ) {
+			if ( ! ( $result instanceof MBR_Relationship ) ) {
 				throw new Exception( vsprintf( 'Could not register relationship "%1$s"', [ $id ] ) );
 			}
 		}
