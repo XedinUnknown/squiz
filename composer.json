@@ -20,7 +20,8 @@
         "wpackagist-plugin/meta-box": "^4.16",
         "wpackagist-plugin/mb-relationships": "^1.6",
         "wpackagist-plugin/simple-taxonomy-ordering": "1.2.7",
-        "plasticmind/mb-term-meta": "*"
+        "plasticmind/mb-term-meta": "*",
+        "phing/phing": "^2"
     },
     "scripts": {
         "cscheck": "phpcs -s -n",
