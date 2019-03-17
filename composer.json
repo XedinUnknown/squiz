@@ -1,6 +1,6 @@
 {
-    "name": "xedinunknown/taxonomy-quiz",
-    "description": "A quiz plugin which relates answers to taxonomies",
+    "name": "xedinunknown/squiz",
+    "description": "A quiz plugin that provides a framework for questions and answers",
     "type": "wordpress-plugin",
     "license": "GPLv3",
     "authors": [
@@ -12,11 +12,16 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^5.4 | ^7.0"
+        "php": "^7.0"
     },
     "require-dev": {
         "wp-coding-standards/wpcs": "^1.0",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3"
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3",
+        "wpackagist-plugin/meta-box": "^4.16",
+        "wpackagist-plugin/mb-relationships": "^1.6",
+        "wpackagist-plugin/simple-taxonomy-ordering": "1.2.7",
+        "plasticmind/mb-term-meta": "*",
+        "phing/phing": "^2"
     },
     "scripts": {
         "cscheck": "phpcs -s -n",
@@ -29,6 +34,10 @@
         {
             "type":"composer",
             "url":"https://wpackagist.org"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/plasticmind/mb-term-meta.git"
         }
     ],
     "extra": {

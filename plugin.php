@@ -2,21 +2,21 @@
 /**
  * Product Code for WooCommerce plugin.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  * @wordpress-plugin
  *
- * Plugin Name: Taxonomy Quiz
+ * Plugin Name: SQuiz
  * Description: A quiz plugin which relates answers to taxonomies
  * Version: [*next-version*]
  * Author: Anton Ukhanev
  * Author URI: https://twitter.com/XedinUnknown
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: taxonomy-quiz
+ * Text Domain: squiz
  * Domain Path: /languages
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
 
 /**
  * Retrieves the plugin singleton.

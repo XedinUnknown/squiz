@@ -1,6 +1,6 @@
 <?php
 /**
- * DI_Container class.
+ * Quiz_Result_Html_Template class.
  *
  * @package SQuiz
  */
@@ -8,13 +8,13 @@
 namespace XedinUnknown\SQuiz;
 
 /**
- * Represents a template.
+ * Represents an HTML template for a quiz.
  *
  * @since 0.1
  *
  * @package SQuiz
  */
-class PHP_Template {
+class Quiz_Result_Html_Template {
 
 	/**
 	 * Path to the template file.
