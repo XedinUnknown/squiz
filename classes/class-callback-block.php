@@ -21,23 +21,23 @@ use RuntimeException;
  */
 class Callback_Block {
 
-    /**
-     * The callback that generates output.
-     *
-     * @since 0.1
-     *
-     * @var callable
-     */
-    protected $callback;
+	/**
+	 * The callback that generates output.
+	 *
+	 * @since 0.1
+	 *
+	 * @var callable
+	 */
+	protected $callback;
 
-    /**
-     * The context to render the template with.
-     *
-     * @since 0.1
-     *
-     * @var array
-     */
-    protected $context;
+	/**
+	 * The context to render the template with.
+	 *
+	 * @since 0.1
+	 *
+	 * @var array
+	 */
+	protected $context;
 
 	/**
 	 * Template_Block constructor.
@@ -63,11 +63,11 @@ class Callback_Block {
 		try {
 			ob_start();
 
-            if ( ! is_callable( $this->callback ) ) {
-                throw new RuntimeException( sprintf( 'Callback must be callable' ) );
-            }
+			if ( ! is_callable( $this->callback ) ) {
+				throw new RuntimeException( sprintf( 'Callback must be callable' ) );
+			}
 
-            call_user_func_array( $this->callback, $this->context );
+			call_user_func_array( $this->callback, $this->context );
 
 			return ob_get_clean();
 		} catch ( Exception $e ) {
@@ -75,16 +75,16 @@ class Callback_Block {
 		}
 	}
 
-    /**
-     * Retrieves the string representation of an error.
-     *
-     * @since [*next-version*]
-     *
-     * @param Exception $e The error to get the output for.
-     *
-     * @return string The string representation of the error.
-     */
+	/**
+	 * Retrieves the string representation of an error.
+	 *
+	 * @since [*next-version*]
+	 *
+	 * @param Exception $e The error to get the output for.
+	 *
+	 * @return string The string representation of the error.
+	 */
 	protected function get_error_output( Exception $e ) {
-        return (string) $e->getMessage() . PHP_EOL . $e->getTraceAsString();
-    }
+		return (string) $e->getMessage() . PHP_EOL . $e->getTraceAsString();
+	}
 }

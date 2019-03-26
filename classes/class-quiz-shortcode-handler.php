@@ -331,14 +331,14 @@ class Quiz_Shortcode_Handler extends Handler {
 				'relationship' => [
 					'id'   => $this->get_config( 'questions_to_answers_relationship_name' ),
 					'from' => $question_ids,
-				]
+				],
 			]
 		);
 		/* @var $answers WP_Post[] */
 
 		$groups = [];
 		foreach ( $answers as $answer ) {
-			$questions     = $this->get_posts(
+			$questions = $this->get_posts(
 				[
 					'post_type'    => $this->get_config( 'question_post_type' ),
 					'relationship' => [
