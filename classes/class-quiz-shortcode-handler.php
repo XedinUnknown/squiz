@@ -243,8 +243,7 @@ class Quiz_Shortcode_Handler extends Handler {
 	 * @return WP_Post[] The list of question posts.
 	 */
 	protected function get_quiz_questions( $quiz_id ) {
-		$query     = new WP_Query();
-		$questions = $query->query(
+		$questions = $this->get_posts(
 			[
 				'post_type'    => $this->get_config( 'question_post_type' ),
 				'relationship' => [
@@ -326,22 +325,20 @@ class Quiz_Shortcode_Handler extends Handler {
 	 * @return array<int, array<int, WP_Post>> Lists of answers, grouped by question ID.
 	 */
 	protected function get_grouped_answers( $question_ids ) {
-		$query   = new WP_Query();
-		$answers = $query->query(
+		$answers = $this->get_posts(
 			[
 				'post_type'    => $this->get_config( 'answer_post_type' ),
 				'relationship' => [
 					'id'   => $this->get_config( 'questions_to_answers_relationship_name' ),
 					'from' => $question_ids,
-				],
+				]
 			]
 		);
 		/* @var $answers WP_Post[] */
 
 		$groups = [];
 		foreach ( $answers as $answer ) {
-			$questionQuery = new WP_Query();
-			$questions     = $questionQuery->query(
+			$questions     = $this->get_posts(
 				[
 					'post_type'    => $this->get_config( 'question_post_type' ),
 					'relationship' => [
