@@ -33,6 +33,10 @@ trait Get_Posts_Capable_Trait {
 		$query = new WP_Query();
 		global $wpdb;
 
+		$args = wp_parse_args($args, [
+		    'posts_per_page'        => -1,
+        ]);
+
 		$results = $query->query( $args );
 		if ( ! empty( $wpdb->last_error ) ) {
 			throw new RuntimeException( $wpdb->last_error );
