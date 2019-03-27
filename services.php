@@ -430,6 +430,7 @@ return function (
 						$c->get( 'course_groups_taxonomy' ),
 						$c->get( 'answers_to_courses_relationship_name' ),
 						$c->get( 'course_groups_max_courses_field' ),
+						$c->get( 'course_post_type' ),
 						$template
 					);
 				};
