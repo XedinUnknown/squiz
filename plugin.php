@@ -38,7 +38,14 @@ function plugin() {
 		$base_dir         = dirname( $base_path );
 		$base_url         = plugins_url( '', $base_path );
 		$services_factory = require_once "$base_dir/services.php";
-		$services         = $services_factory( $base_path, $base_url );
+		$parent_template_path  = get_template_directory();
+		$child_template_path = get_stylesheet_directory();
+		$services         = $services_factory(
+		    $base_path,
+            $base_url,
+            $parent_template_path,
+            $child_template_path
+        );
 		$container        = new DI_Container( $services );
 
 		$instance = new Plugin( $container );
