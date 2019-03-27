@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [[*next-version*]] - YYYY-MM-DD
+### Added
+- Shortcode received optional attributes `quiz_template` and `result_template`,
+whilch allow overriding the default template.
+- Plugin templates can now be overridden from the theme, including child theme.
+
+### Changed
+- Changed some config keys.
 
 ## [0.1.0-alpha2] - 2019-03-26
 ### Changed

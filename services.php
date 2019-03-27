@@ -8,6 +8,7 @@
 use XedinUnknown\SQuiz\Callback_Block;
 use XedinUnknown\SQuiz\DI_Container;
 use XedinUnknown\SQuiz\Fields_Types_Handler;
+use XedinUnknown\SQuiz\File_Path_Resolver;
 use XedinUnknown\SQuiz\PHP_Template;
 use XedinUnknown\SQuiz\Quiz_Shortcode_Handler;
 use XedinUnknown\SQuiz\Quiz_Submission_Handler;
@@ -25,18 +26,38 @@ use XedinUnknown\SQuiz\Template_Block;
  *
  * @return array A map of service names to service definitions.
  */
-return function ( $base_path, $base_url ) {
+return function (
+	$base_path,
+	$base_url,
+	$module_name,
+	$parent_theme_path,
+	$child_theme_path
+) {
 		return [
-			'version'                                => '[*next-version*]',
-			'base_path'                              => $base_path,
-			'base_dir'                               => dirname( $base_path ),
-			'base_url'                               => $base_url,
-			'js_path'                                => '/assets/js',
-			'templates_dir'                          => '/templates',
-			'translations_dir'                       => '/languages',
-			'text_domain'                            => 'squiz',
+			'name'                                      => $module_name,
+			'version'                                   => '[*next-version*]',
+			'base_path'                                 => $base_path,
+			'base_dir'                                  => dirname( $base_path ),
+			'base_url'                                  => $base_url,
+			'js_path'                                   => '/assets/js',
+			'templates_dir'                             => '/templates',
+			'parent_theme_path'                         => $parent_theme_path,
+			'child_theme_path'                          => $child_theme_path,
+			'theme_template_dir'                        => '__modules',
+			'translations_dir'                          => '/languages',
+			'text_domain'                               => function ( DI_Container $c ) {
+				return $c->get( 'name' );
+			},
 
-			'template_path_factory'                  => function ( DI_Container $c ) {
+			'translation'                               => function ( DI_Container $c ) {
+				$text_domain = $c->get( 'text_domain' );
+
+				return function ( string $string, $placeholders = []) use ( $text_domain): string {
+					return vsprintf( __( $string, $text_domain ), $placeholders );
+				};
+			},
+
+			'template_path_factory'                     => function ( DI_Container $c ) {
 				$baseDir      = rtrim( $c->get( 'base_dir' ), '\\/' );
 				$templatesDir = trim( $c->get( 'templates_dir' ), '\\/' );
 
@@ -52,9 +73,30 @@ return function ( $base_path, $base_url ) {
 			 *
 			 * @since 0.1
 			 */
-			'template_factory'                       => function ( DI_Container $c ) {
+			'template_factory'                          => function ( DI_Container $c ) {
 				return function ( $path ) {
 					return new PHP_Template( $path );
+				};
+			},
+
+			'local_template_factory'                    => function ( DI_Container $c ) {
+				$resolver = $c->get( 'template_path_resolver' );
+				assert( $resolver instanceof File_Path_Resolver );
+
+				$t = $c->get( 'translation' );
+				assert( is_callable( $t ) );
+
+				$f = $c->get( 'template_factory' );
+				assert( $f instanceof PHP_Template );
+
+				return function ( $template) use ( $resolver, $f, $t) {
+					$template = "{$template}.php";
+					$path     = $resolver->resolve( $template );
+					if ($path === null) {
+						throw new UnexpectedValueException( $t( 'The path for template "%1$s" could not be resolved', [ $template ] ) );
+					}
+
+					return $f( $path );
 				};
 			},
 
@@ -63,7 +105,7 @@ return function ( $base_path, $base_url ) {
 			 *
 			 * @since 0.1
 			 */
-			'block_factory'                          => function ( DI_Container $c ) {
+			'block_factory'                             => function ( DI_Container $c ) {
 				return function ( PHP_Template $template, $context ) {
 					return new Template_Block( $template, $context );
 				};
@@ -74,7 +116,7 @@ return function ( $base_path, $base_url ) {
 			 *
 			 * @since 0.1
 			 */
-			'callback_block_factory'                 => function ( DI_Container $c ) {
+			'callback_block_factory'                    => function ( DI_Container $c ) {
 				return function ( callable $callback, $context = [] ) {
 					return new Callback_Block( $callback, $context );
 				};
@@ -85,7 +127,7 @@ return function ( $base_path, $base_url ) {
 			 *
 			 * @since 0.1
 			 */
-			'handlers'                               => function ( DI_Container $c ) {
+			'handlers'                                  => function ( DI_Container $c ) {
 				return [
 					$c->get( 'fields_types_handler' ),
 					$c->get( 'quiz_shortcode_handler' ),
@@ -93,36 +135,36 @@ return function ( $base_path, $base_url ) {
 				];
 			},
 
-			'question_groups_taxonomy'               => function ( DI_Container $c ) {
+			'question_groups_taxonomy'                  => function ( DI_Container $c ) {
 				return 'question_groups';
 			},
 
-			'answer_post_type'                       => function ( DI_Container $c ) {
+			'answer_post_type'                          => function ( DI_Container $c ) {
 				return 'answer';
 			},
 
-			'question_post_type'                     => function ( DI_Container $c ) {
+			'question_post_type'                        => function ( DI_Container $c ) {
 				return 'question';
 			},
 
-			'questions_to_answers_relationship_name' => 'questions_to_answers',
+			'questions_to_answers_relationship_name'    => 'questions_to_answers',
 
-			'course_post_type'                       => function ( DI_Container $c ) {
+			'course_post_type'                          => function ( DI_Container $c ) {
 				return 'courses';
 			},
 
-			'course_groups_taxonomy'                 => function ( DI_Container $c ) {
+			'course_groups_taxonomy'                    => function ( DI_Container $c ) {
 				return 'course_groups';
 			},
 
-			'quiz_post_type'                         => 'quiz',
-			'quiz_submission_post_type'              => 'quiz_submission',
+			'quiz_post_type'                            => 'quiz',
+			'quiz_submission_post_type'                 => 'quiz_submission',
 
-			'quizes_to_questions_relationship_name'  => 'quizes_to_questions',
+			'quizes_to_questions_relationship_name'     => 'quizes_to_questions',
 
-			'answers_to_courses_relationship_name'   => 'answers_to_courses',
+			'answers_to_courses_relationship_name'      => 'answers_to_courses',
 
-			'field_relationships'                    => function ( DI_Container $c ) {
+			'field_relationships'                       => function ( DI_Container $c ) {
 				return [
 					$c->get( 'questions_to_answers_relationship_name' ) => [
 						'from' => [
@@ -180,14 +222,14 @@ return function ( $base_path, $base_url ) {
 				];
 			},
 
-			'fields_types_handler'                   => function ( DI_Container $c ) {
+			'fields_types_handler'                      => function ( DI_Container $c ) {
 				return new Fields_Types_Handler( $c );
 			},
 
-			'quiz_shortcode_handler'                 => function ( DI_Container $c ) {
+			'quiz_shortcode_handler'                    => function ( DI_Container $c ) {
 				return new Quiz_Shortcode_Handler(
 					$c,
-					$c->get( 'quiz_submission_document_creator' ),
+					$c->get( 'quiz_submission_document_creator_factory' ),
 					$c->get( 'submission_request_var_name' ),
 					$c->get( 'question_max_answers_field' )
 				);
@@ -196,7 +238,7 @@ return function ( $base_path, $base_url ) {
 			/*
 			 * @see https://codex.wordpress.org/Function_Reference/register_post_type
 			 */
-			'post_types'                             => function ( DI_Container $c ) {
+			'post_types'                                => function ( DI_Container $c ) {
 				return [
 					$c->get( 'question_post_type' )        => [
 						'labels'              => [
@@ -292,7 +334,7 @@ return function ( $base_path, $base_url ) {
 				];
 			},
 
-			'taxonomies'                             => function ( DI_Container $c ) {
+			'taxonomies'                                => function ( DI_Container $c ) {
 				return [
 					$c->get( 'question_groups_taxonomy' ) => [
 						'object_type'  => [ $c->get( 'question_post_type' ) ],
@@ -323,10 +365,10 @@ return function ( $base_path, $base_url ) {
 					],
 				];
 			},
-			'course_groups_max_courses_field'        => 'max_courses',
-			'course_groups_description_field'        => 'long_description',
-			'question_max_answers_field'             => 'max_answers',
-			'taxonomy_metaboxes'                     => function ( DI_Container $c ) {
+			'course_groups_max_courses_field'           => 'max_courses',
+			'course_groups_description_field'           => 'long_description',
+			'question_max_answers_field'                => 'max_answers',
+			'taxonomy_metaboxes'                        => function ( DI_Container $c ) {
 				return [
 					[
 						'title'      => __( 'Quiz Submissions' ),
@@ -363,38 +405,56 @@ return function ( $base_path, $base_url ) {
 					],
 				];
 			},
-			'quiz_shortcode_name'                    => 'squiz',
-			'submission_request_var_name'            => 'submission',
-			'submission_answer_groups_var_name'      => 'squiz-answers',
-			'submission_field_quiz_id'               => 'squiz_quiz_id',
-			'submission_field_grouped_answers'       => 'squiz_grouped_answers',
-			'submission_document_template_name'      => 'quiz-result',
+			'quiz_shortcode_name'                       => 'squiz',
+			'submission_request_var_name'               => 'submission',
+			'submission_answer_groups_var_name'         => 'squiz-answers',
+			'submission_field_quiz_id'                  => 'squiz_quiz_id',
+			'submission_field_grouped_answers'          => 'squiz_grouped_answers',
+			'submission_document_default_template_name' => 'quiz-result',
+			'quiz_default_template_name'                => 'quiz',
 
-			'quiz_submission_handler'                => function ( DI_Container $c ) {
+			'quiz_submission_handler'                   => function ( DI_Container $c ) {
 				return new Quiz_Submission_Handler(
 					$c,
 					$c->get( 'submission_request_var_name' )
 				);
 			},
 
-			'quiz_submission_document_creator'       => function ( DI_Container $c ) {
-				return new Submission_Document_Creator(
-					$c->get( 'submission_field_grouped_answers' ),
-					$c->get( 'submission_field_quiz_id' ),
-					$c->get( 'quiz_post_type' ),
-					$c->get( 'quiz_submission_post_type' ),
-					$c->get( 'course_groups_taxonomy' ),
-					$c->get( 'answers_to_courses_relationship_name' ),
-					$c->get( 'course_groups_max_courses_field' ),
-					$c->get( 'quiz_submission_document_template' )
-				);
+			'quiz_submission_document_creator_factory'  => function ( DI_Container $c) {
+				return function ( PHP_Template $template) use ( $c) {
+					return new Submission_Document_Creator(
+						$c->get( 'submission_field_grouped_answers' ),
+						$c->get( 'submission_field_quiz_id' ),
+						$c->get( 'quiz_post_type' ),
+						$c->get( 'quiz_submission_post_type' ),
+						$c->get( 'course_groups_taxonomy' ),
+						$c->get( 'answers_to_courses_relationship_name' ),
+						$c->get( 'course_groups_max_courses_field' ),
+						$template
+					);
+				};
 			},
 
-			'quiz_submission_document_template'      => function ( DI_Container $c ) {
-				$templateName = $c->get( 'submission_document_template_name' );
-				$templatePath = $c->get( 'template_path_factory' )( "$templateName.php" );
+			'template_path_resolver'                    => function ( DI_Container $c ) {
+				return new File_Path_Resolver( $c->get( 'template_directories' ) );
+			},
 
-				return new PHP_Template( $templatePath );
+			'template_directories'                      => function ( DI_Container $c ) {
+				$theme_template_dir    = trim( $c->get( 'theme_template_dir' ), '/' );
+				$child_dir_name        = basename( $c->get( 'name' ) );
+				$parent_theme_path     = rtrim( $c->get( 'parent_theme_path' ), '/' );
+				$child_theme_path      = rtrim( $c->get( 'child_theme_path' ), '/' );
+				$template_path_factory = $c->get( 'template_path_factory' );
+				$local_template_path   = $template_path_factory( '' );
+				$dirs                  = [ "{$child_theme_path}/{$theme_template_dir}/{$child_dir_name}" ];
+
+				if ($parent_theme_path !== $child_theme_path) {
+					$dirs[] = "{$parent_theme_path}/{$theme_template_dir}/{$child_dir_name}";
+				}
+
+				$dirs[] = $local_template_path;
+
+				return $dirs;
 			},
 		];
 };

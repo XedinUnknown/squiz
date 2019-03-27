@@ -34,12 +34,21 @@ function plugin() {
 	}
 
 	if ( is_null( $instance ) ) {
-		$base_path        = __FILE__;
-		$base_dir         = dirname( $base_path );
-		$base_url         = plugins_url( '', $base_path );
-		$services_factory = require_once "$base_dir/services.php";
-		$services         = $services_factory( $base_path, $base_url );
-		$container        = new DI_Container( $services );
+		$base_path            = __FILE__;
+		$base_dir             = dirname( $base_path );
+		$base_url             = plugins_url( '', $base_path );
+		$services_factory     = require_once "$base_dir/services.php";
+		$parent_template_path = get_template_directory();
+		$child_template_path  = get_stylesheet_directory();
+		$module_name          = 'squiz'; // Code of the plugin
+		$services             = $services_factory(
+			$base_path,
+			$base_url,
+			$module_name,
+			$parent_template_path,
+			$child_template_path
+		);
+		$container            = new DI_Container( $services );
 
 		$instance = new Plugin( $container );
 	}

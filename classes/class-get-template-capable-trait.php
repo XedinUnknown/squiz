@@ -29,9 +29,7 @@ trait Get_Template_Capable_Trait {
 	 * @return PHP_Template The template for the key.
 	 */
 	protected function get_template( $template ) {
-		$path = $this->get_config( 'template_path_factory' )( "$template.php" );
-
-		return $this->get_config( 'template_factory' )( $path );
+		return $this->get_config( 'local_template_factory' )( $template );
 	}
 
 	/**

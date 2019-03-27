@@ -45,13 +45,13 @@ class Quiz_Shortcode_Handler extends Handler {
 	use Index_List_Capable_Trait;
 
 	/**
-	 * The object responsible for the creation of the submission document.
+	 * The factory that, given a template, produces {@see Submission_Document_Creator} instance.
 	 *
 	 * @since [*next-version*]
 	 *
-	 * @var Submission_Document_Creator
+	 * @var callable
 	 */
-	protected $documentCreator;
+	protected $document_creator_factory;
 
 	/**
 	 * The field name of a Question that contains the max answers value for that question.
@@ -80,13 +80,13 @@ class Quiz_Shortcode_Handler extends Handler {
 	 */
 	public function __construct(
 		DI_Container $config,
-		Submission_Document_Creator $documentCreator,
+		callable $document_creator_factory,
 		string $submission_request_var_name,
 		string $question_max_answers_field_name
 	) {
 		parent::__construct( $config );
 
-		$this->documentCreator                 = $documentCreator;
+		$this->document_creator_factory        = $document_creator_factory;
 		$this->question_max_answers_field_name = $question_max_answers_field_name;
 		$this->submission_request_var_name     = $submission_request_var_name;
 	}
@@ -134,8 +134,8 @@ class Quiz_Shortcode_Handler extends Handler {
 	/**
 	 * Retrieves either the quiz or the result HTML.
 	 *
-	 * @param $attributes
-	 * @param string     $content
+	 * @param array  $attributes The map of attribute keys to values.
+	 * @param string $content
 	 * @throws Throwable
 	 *
 	 * @return string If the submission field is present in the URL query, retrieves the result HTML for that submission.
@@ -144,15 +144,22 @@ class Quiz_Shortcode_Handler extends Handler {
 	protected function get_shortcode_output( $attributes, $content = '' ) {
 		try {
 			// Displaying submission result
-			$var_name = $this->submission_request_var_name;
+			$var_name   = $this->submission_request_var_name;
+			$attributes = wp_parse_args(
+				$attributes,
+				[
+					'quiz_template'   => $this->get_config( 'quiz_default_template_name' ),
+					'result_template' => $this->get_config( 'submission_document_default_template_name' ),
+				]
+			);
 			if ( isset( $_GET[ $var_name ] ) ) {
-				return $this->render_document_for_submission( $_GET[ $var_name ] );
+				return $this->render_document_for_submission( $_GET[ $var_name ], $attributes['result_template'] );
 			}
 
 			// Displaying quiz
 			$this->validate_attributes( $attributes );
 
-			return $this->get_quiz_output( intval( $attributes['id'] ) );
+			return $this->get_quiz_output( intval( $attributes['id'] ), (string) $attributes['quiz_template'] );
 		} catch ( Throwable $e ) {
 			$message = __( 'Could not render SQuiz shortcode', 'squiz' );
 			if ( WP_DEBUG ) {
@@ -181,13 +188,14 @@ class Quiz_Shortcode_Handler extends Handler {
 	/**
 	 * Retrieves the HTML output for a quiz.
 	 *
-	 * @param int $id The ID of the Quiz post to get the output for.
+	 * @param int    $id The ID of the Quiz post to get the output for.
+	 * @param string $template_name Name of the template for the output.
 	 *
 	 * @return string The HTML of the quiz.
 	 *
 	 * @throws Throwable If problem retrieving.
 	 */
-	protected function get_quiz_output( int $id ) {
+	protected function get_quiz_output( int $id, string $template_name ) {
 		$quiz              = $this->get_quiz( $id );
 		$questions         = $this->get_quiz_questions( $quiz->ID );
 		$question_ids      = array_keys( $questions );
@@ -206,7 +214,7 @@ class Quiz_Shortcode_Handler extends Handler {
 			}
 		);
 
-		return $this->get_template( 'quiz' )->render(
+		return $this->get_template( $template_name )->render(
 			[
 				'quiz'                              => $quiz,
 				'question_groups'                   => $question_groups,
@@ -366,12 +374,13 @@ class Quiz_Shortcode_Handler extends Handler {
 	 * Retrieves the output of the submission document.
 	 *
 	 * @param string $submission_code The code (slug) of the Submission to render the document for.
+	 * @param string $templateName The name of the template to render with.
 	 *
 	 * @throws Throwable If problem rendering.
 	 *
 	 * @return string The output of the submission document.
 	 */
-	protected function render_document_for_submission( string $submission_code ): string {
+	protected function render_document_for_submission( string $submission_code, string $templateName ): string {
 		$submissions = $this->get_posts(
 			[
 				'post_type'   => $this->get_config( 'quiz_submission_post_type' ),
@@ -386,6 +395,11 @@ class Quiz_Shortcode_Handler extends Handler {
 			throw new OutOfRangeException( sprintf( __( 'Submission with code "%1$s" not found' ), $submission_code ) );
 		}
 
-		return $this->documentCreator->get_document_output( intval( $submission->ID ) );
+		$template = $this->get_template( $templateName );
+		$factory  = $this->document_creator_factory;
+		$creator  = $factory( $template );
+		assert( $creator instanceof Submission_Document_Creator );
+
+		return $creator->get_document_output( intval( $submission->ID ) );
 	}
 }
