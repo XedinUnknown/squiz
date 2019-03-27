@@ -8,6 +8,7 @@
 use XedinUnknown\SQuiz\Callback_Block;
 use XedinUnknown\SQuiz\DI_Container;
 use XedinUnknown\SQuiz\Fields_Types_Handler;
+use XedinUnknown\SQuiz\File_Path_Resolver;
 use XedinUnknown\SQuiz\PHP_Template;
 use XedinUnknown\SQuiz\Quiz_Shortcode_Handler;
 use XedinUnknown\SQuiz\Quiz_Submission_Handler;
@@ -398,5 +399,25 @@ return function ( $base_path, $base_url, $parent_theme_path, $child_theme_path )
 
 				return new PHP_Template( $templatePath );
 			},
+
+            'template_path_resolver' => function ( DI_Container $c ) {
+			    return new File_Path_Resolver($c->get('template_directories'));
+            },
+
+            'template_directories' => function ( DI_Container $c ) {
+			    $parent_theme_path = $c->get('parent_theme_path');
+			    $child_theme_path = $c->get('child_theme_path');
+			    $template_path_factory = $c->get('template_path_factory');
+			    $local_template_path = $template_path_factory('');
+			    $dirs = [$child_theme_path];
+
+			    if ($parent_theme_path !== $child_theme_path) {
+			        $dirs[] = $parent_theme_path;
+                }
+
+			    $dirs[] = $local_template_path;
+
+			    return $dirs;
+            },
 		];
 };
