@@ -134,8 +134,8 @@ class Quiz_Shortcode_Handler extends Handler {
 	/**
 	 * Retrieves either the quiz or the result HTML.
 	 *
-	 * @param array $attributes The map of attribute keys to values.
-	 * @param string     $content
+	 * @param array  $attributes The map of attribute keys to values.
+	 * @param string $content
 	 * @throws Throwable
 	 *
 	 * @return string If the submission field is present in the URL query, retrieves the result HTML for that submission.
@@ -144,11 +144,14 @@ class Quiz_Shortcode_Handler extends Handler {
 	protected function get_shortcode_output( $attributes, $content = '' ) {
 		try {
 			// Displaying submission result
-			$var_name = $this->submission_request_var_name;
-			$attributes = wp_parse_args($attributes, [
-			    'quiz_template'           => $this->get_config('quiz_default_template_name'),
-			    'result_template'         => $this->get_config('submission_document_default_template_name')
-            ]);
+			$var_name   = $this->submission_request_var_name;
+			$attributes = wp_parse_args(
+				$attributes,
+				[
+					'quiz_template'   => $this->get_config( 'quiz_default_template_name' ),
+					'result_template' => $this->get_config( 'submission_document_default_template_name' ),
+				]
+			);
 			if ( isset( $_GET[ $var_name ] ) ) {
 				return $this->render_document_for_submission( $_GET[ $var_name ], $attributes['result_template'] );
 			}
@@ -185,8 +188,8 @@ class Quiz_Shortcode_Handler extends Handler {
 	/**
 	 * Retrieves the HTML output for a quiz.
 	 *
-	 * @param int $id The ID of the Quiz post to get the output for.
-     * @param string $template_name Name of the template for the output.
+	 * @param int    $id The ID of the Quiz post to get the output for.
+	 * @param string $template_name Name of the template for the output.
 	 *
 	 * @return string The HTML of the quiz.
 	 *
@@ -371,7 +374,7 @@ class Quiz_Shortcode_Handler extends Handler {
 	 * Retrieves the output of the submission document.
 	 *
 	 * @param string $submission_code The code (slug) of the Submission to render the document for.
-     * @param string $templateName The name of the template to render with.
+	 * @param string $templateName The name of the template to render with.
 	 *
 	 * @throws Throwable If problem rendering.
 	 *
@@ -392,10 +395,10 @@ class Quiz_Shortcode_Handler extends Handler {
 			throw new OutOfRangeException( sprintf( __( 'Submission with code "%1$s" not found' ), $submission_code ) );
 		}
 
-		$template = $this->get_template($templateName);
-		$factory = $this->document_creator_factory;
-		$creator = $factory($template);
-		assert($creator instanceof Submission_Document_Creator);
+		$template = $this->get_template( $templateName );
+		$factory  = $this->document_creator_factory;
+		$creator  = $factory( $template );
+		assert( $creator instanceof Submission_Document_Creator );
 
 		return $creator->get_document_output( intval( $submission->ID ) );
 	}
