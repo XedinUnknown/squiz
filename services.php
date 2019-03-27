@@ -39,6 +39,14 @@ return function ( $base_path, $base_url, $parent_theme_path, $child_theme_path )
 			'translations_dir'                       => '/languages',
 			'text_domain'                            => 'squiz',
 
+            'translation'                            => function ( DI_Container $c ) {
+		        $text_domain = $c->get('text_domain');
+
+		        return function (string $string, $placeholders = []) use ($text_domain): string {
+                    return vsprintf(__($string, $text_domain), $placeholders);
+                };
+            },
+
 			'template_path_factory'                  => function ( DI_Container $c ) {
 				$baseDir      = rtrim( $c->get( 'base_dir' ), '\\/' );
 				$templatesDir = trim( $c->get( 'templates_dir' ), '\\/' );
