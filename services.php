@@ -69,6 +69,27 @@ return function ( $base_path, $base_url, $parent_theme_path, $child_theme_path )
 				};
 			},
 
+            'local_template_factory' => function ( DI_Container $c ) {
+			    $resolver = $c->get('template_path_resolver');
+			    assert($resolver instanceof File_Path_Resolver);
+
+			    $t = $c->get('translation');
+			    assert(is_callable($t));
+
+			    $f = $c->get('template_factory');
+			    assert($f instanceof PHP_Template);
+
+			    return function ($template) use ($resolver, $f, $t) {
+			        $template = "{$template}.php";
+                    $path = $resolver->resolve($template);
+                    if ($path === null) {
+                        throw new UnexpectedValueException($t('The path for template "%1$s" could not be resolved', [$template]));
+                    }
+
+                    return $f($path);
+                };
+            },
+
 			/*
 			 * Makes blocs.
 			 *
