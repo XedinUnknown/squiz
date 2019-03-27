@@ -26,8 +26,15 @@ use XedinUnknown\SQuiz\Template_Block;
  *
  * @return array A map of service names to service definitions.
  */
-return function ( $base_path, $base_url, $parent_theme_path, $child_theme_path ) {
+return function (
+    $base_path,
+    $base_url,
+    $module_name,
+    $parent_theme_path,
+    $child_theme_path
+) {
 		return [
+		    'name'                                   => $module_name,
 			'version'                                => '[*next-version*]',
 			'base_path'                              => $base_path,
 			'base_dir'                               => dirname( $base_path ),
@@ -37,7 +44,9 @@ return function ( $base_path, $base_url, $parent_theme_path, $child_theme_path )
             'parent_theme_path'                      => $parent_theme_path,
             'child_theme_path'                       => $child_theme_path,
 			'translations_dir'                       => '/languages',
-			'text_domain'                            => 'squiz',
+			'text_domain'                            => function ( DI_Container $c ) {
+		        return $c->get('name');
+            },
 
             'translation'                            => function ( DI_Container $c ) {
 		        $text_domain = $c->get('text_domain');
