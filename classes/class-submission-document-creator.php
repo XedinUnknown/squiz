@@ -96,6 +96,15 @@ class Submission_Document_Creator {
 	protected $course_groups_max_courses_field_name;
 
 	/**
+	 * Name of the course post type.
+	 *
+	 * @since [*next-version*]
+	 *
+	 * @var string
+	 */
+	protected $course_post_type_name;
+
+	/**
 	 * The template for the submission result document.
 	 *
 	 * @since [*next-version*]
@@ -123,6 +132,7 @@ class Submission_Document_Creator {
 		string $course_groups_taxonomy_name,
 		string $answers_to_courses_relationship_name,
 		string $course_groups_max_courses_field_name,
+		string $course_post_type_name,
 		PHP_Template $document_template
 	) {
 		$this->sf_grouped_answers = $sf_grouped_answers;
@@ -133,6 +143,7 @@ class Submission_Document_Creator {
 		$this->set_answers_to_courses_relationship_name( $answers_to_courses_relationship_name );
 		$this->course_groups_taxonomy_name          = $course_groups_taxonomy_name;
 		$this->course_groups_max_courses_field_name = $course_groups_max_courses_field_name;
+		$this->course_post_type_name                = $course_post_type_name;
 		$this->document_template                    = $document_template;
 	}
 
@@ -210,7 +221,7 @@ class Submission_Document_Creator {
 			$answer_ids,
 			$this->get_answers_to_courses_relationship_name(),
 			true,
-			$this->get_course_groups_taxonomy_name(),
+			$this->get_course_post_type_name(),
 			static::COURSE_MEMBER_ANSWER_IDS
 		);
 	}
@@ -372,5 +383,14 @@ class Submission_Document_Creator {
 		return $courses;
 	}
 
-
+	/**
+	 * Retrieves the name of the "Course" post type.
+	 *
+	 * @since [*next-version*]
+	 *
+	 * @return string The name of the post type.
+	 */
+	protected function get_course_post_type_name(): string {
+		return $this->course_post_type_name;
+	}
 }
