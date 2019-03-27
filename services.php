@@ -43,6 +43,7 @@ return function (
 			'templates_dir'                          => '/templates',
             'parent_theme_path'                      => $parent_theme_path,
             'child_theme_path'                       => $child_theme_path,
+            'theme_template_dir'                     => '__modules',
 			'translations_dir'                       => '/languages',
 			'text_domain'                            => function ( DI_Container $c ) {
 		        return $c->get('name');
@@ -443,14 +444,16 @@ return function (
             },
 
             'template_directories' => function ( DI_Container $c ) {
-			    $parent_theme_path = $c->get('parent_theme_path');
-			    $child_theme_path = $c->get('child_theme_path');
+			    $theme_template_dir = trim($c->get('theme_template_dir'), '/');
+			    $child_dir_name = basename($c->get('name'));
+			    $parent_theme_path = rtrim($c->get('parent_theme_path'), '/');
+			    $child_theme_path = rtrim($c->get('child_theme_path'), '/');
 			    $template_path_factory = $c->get('template_path_factory');
 			    $local_template_path = $template_path_factory('');
-			    $dirs = [$child_theme_path];
+			    $dirs = ["{$child_theme_path}/{$theme_template_dir}/{$child_dir_name}"];
 
 			    if ($parent_theme_path !== $child_theme_path) {
-			        $dirs[] = $parent_theme_path;
+			        $dirs[] = "{$parent_theme_path}/{$theme_template_dir}/{$child_dir_name}";
                 }
 
 			    $dirs[] = $local_template_path;
