@@ -229,7 +229,7 @@ return function (
 			'quiz_shortcode_handler'                 => function ( DI_Container $c ) {
 				return new Quiz_Shortcode_Handler(
 					$c,
-					$c->get( 'quiz_submission_document_creator' ),
+					$c->get( 'quiz_submission_document_creator_factory' ),
 					$c->get( 'submission_request_var_name' ),
 					$c->get( 'question_max_answers_field' )
 				);
@@ -410,7 +410,8 @@ return function (
 			'submission_answer_groups_var_name'      => 'squiz-answers',
 			'submission_field_quiz_id'               => 'squiz_quiz_id',
 			'submission_field_grouped_answers'       => 'squiz_grouped_answers',
-			'submission_document_template_name'      => 'quiz-result',
+			'submission_document_default_template_name' => 'quiz-result',
+            'quiz_default_template_name'             => 'quiz',
 
 			'quiz_submission_handler'                => function ( DI_Container $c ) {
 				return new Quiz_Submission_Handler(
@@ -419,25 +420,20 @@ return function (
 				);
 			},
 
-			'quiz_submission_document_creator'       => function ( DI_Container $c ) {
-				return new Submission_Document_Creator(
-					$c->get( 'submission_field_grouped_answers' ),
-					$c->get( 'submission_field_quiz_id' ),
-					$c->get( 'quiz_post_type' ),
-					$c->get( 'quiz_submission_post_type' ),
-					$c->get( 'course_groups_taxonomy' ),
-					$c->get( 'answers_to_courses_relationship_name' ),
-					$c->get( 'course_groups_max_courses_field' ),
-					$c->get( 'quiz_submission_document_template' )
-				);
-			},
-
-			'quiz_submission_document_template'      => function ( DI_Container $c ) {
-				$templateName = $c->get( 'submission_document_template_name' );
-				$templatePath = $c->get( 'template_path_factory' )( "$templateName.php" );
-
-				return new PHP_Template( $templatePath );
-			},
+            'quiz_submission_document_creator_factory' => function ( DI_Container $c) {
+			    return function (PHP_Template $template) use ($c) {
+                    return new Submission_Document_Creator(
+                        $c->get( 'submission_field_grouped_answers' ),
+                        $c->get( 'submission_field_quiz_id' ),
+                        $c->get( 'quiz_post_type' ),
+                        $c->get( 'quiz_submission_post_type' ),
+                        $c->get( 'course_groups_taxonomy' ),
+                        $c->get( 'answers_to_courses_relationship_name' ),
+                        $c->get( 'course_groups_max_courses_field' ),
+                        $template
+                    );
+                };
+            },
 
             'template_path_resolver' => function ( DI_Container $c ) {
 			    return new File_Path_Resolver($c->get('template_directories'));
