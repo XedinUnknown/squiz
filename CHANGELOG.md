@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.1.0-alpha3] - 2019-03-27
 ### Added
 - Shortcode received optional attributes `quiz_template` and `result_template`,
-whilch allow overriding the default template.
+whilch allow overriding the default template (#4).
 - Plugin templates can now be overridden from the theme, including child theme.
 
 ### Changed
