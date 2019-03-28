@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [[*next-version*]] - YYYY-MM-DD
+
+## [0.1.0-alpha5] - 2019-03-27
 ### Fixed
 - Submissions will be shown even if the user is not logged in (#8).
 
