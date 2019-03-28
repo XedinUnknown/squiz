@@ -44,28 +44,36 @@ $before_questions = $c( 'before_questions' );
 				<?php foreach ( $questions as $question ) : ?>
 					<?php /* @var $question WP_Post */ ?>
 					<?php $question_id = $question->ID; ?>
+					<?php $question_type = $question->question_type; ?>
 							<li>
 								<div class="question question-<?php echo esc_attr( $question->ID ); ?>" id="question-<?php echo esc_attr( $group_id ); ?>-<?php echo esc_attr( $question_id ); ?>">
 									<dl>
 									<dt><h4 class="question-title"><?php echo get_the_title( $question ); ?></h4></dt>
 									<dd class="question-answers">
-					<?php if ( isset( $grouped_answers[ $question_id ] ) && count( $grouped_answers[ $question_id ] ) ) : ?>
+					<?php if ($question_type === 'text') : ?>
+										<fieldset>
+											<input type="text" id="answer_<?php echo esc_attr( $question_id ); ?>" name="<?php echo esc_attr( $answer_groups_name ); ?>[<?php echo esc_attr( $question_id ); ?>]" />
+										</fieldset>
+					<?php endif; ?>
+					<?php if ($question_type === 'multiple_choice' || empty( $question_type )) : ?>
+						<?php if ( isset( $grouped_answers[ $question_id ] ) && count( $grouped_answers[ $question_id ] ) ) : ?>
 										<fieldset class="checkbox-group" data-limit="<?php echo esc_attr( $question->max_answers ); ?>">
 											<ol>
-						<?php foreach ( $grouped_answers[ $question_id ] as $answer ) : ?>
-							<?php /* @var $answer WP_Post */ ?>
-							<?php $answer_id = $answer->ID; ?>
-							<?php $html_answer_id = "answer_{$question_id}_{$answer_id}"; ?>
+							<?php foreach ( $grouped_answers[ $question_id ] as $answer ) : ?>
+								<?php /* @var $answer WP_Post */ ?>
+								<?php $answer_id = $answer->ID; ?>
+								<?php $html_answer_id = "answer_{$question_id}_{$answer_id}"; ?>
 												<li>
 													<div class="answer answer-container-<?php echo esc_attr( $answer_id ); ?>">
 														<input type="checkbox" id="<?php echo esc_attr( $html_answer_id ); ?>" name="<?php echo esc_attr( $answer_groups_name ); ?>[<?php echo esc_attr( $question_id ); ?>][]" value="<?php echo esc_attr( $answer_id ); ?>" />
 														<label for="<?php echo esc_attr( $html_answer_id ); ?>"><?php echo get_the_title( $answer ); ?></label>
 													</div>
 												</li>
-						<?php endforeach ?>
+							<?php endforeach ?>
 											</ol>
 										</fieldset>
-					<?php endif ?>
+						<?php endif ?>
+					<?php endif; ?>
 									</dd>
 								</dl>
 							</div>
