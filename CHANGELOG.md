@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [[*next-version*]] - YYYY-MM-DD
+
+## [0.1.0-alpha6] - 2019-03-28
 ### Added
 - Questions can now be one of two types: Text (new), or Multiple Choice (original) (#10).
 

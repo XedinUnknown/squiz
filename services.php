@@ -35,7 +35,7 @@ return function (
 ) {
 		return [
 			'name'                                      => $module_name,
-			'version'                                   => '0.1.0-alpha5',
+			'version'                                   => '0.1.0-alpha6',
 			'base_path'                                 => $base_path,
 			'base_dir'                                  => dirname( $base_path ),
 			'base_url'                                  => $base_url,
