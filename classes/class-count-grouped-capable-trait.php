@@ -23,6 +23,10 @@ trait Count_Grouped_Capable_Trait {
 		$counts = [];
 
 		foreach ( $groups as $group ) {
+		    if (!is_array($group)) {
+		        continue;
+            }
+
 			foreach ( $group as $item ) {
 				$counts[ $item ] = isset( $counts[ $item ] )
 					? $counts[ $item ] + 1
