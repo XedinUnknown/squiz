@@ -367,11 +367,11 @@ return function (
 			},
 			'course_groups_max_courses_field'           => 'max_courses',
 			'course_groups_description_field'           => 'long_description',
-            'question_max_answers_field'                => 'max_answers',
-            'question_type_field'                       => 'question_type',
+			'question_max_answers_field'                => 'max_answers',
+			'question_type_field'                       => 'question_type',
 			'taxonomy_metaboxes'                        => function ( DI_Container $c ) {
-			    $t = $c->get('translation');
-			    assert(is_callable($t));
+				$t = $c->get( 'translation' );
+				assert( is_callable( $t ) );
 
 				return [
 					[
@@ -398,25 +398,25 @@ return function (
 						'title'      => __( 'Question Options' ),
 						'post_types' => [ $c->get( 'question_post_type' ) ],
 						'fields'     => [
-                            [
-                                'name'              => __( 'Max Answers' ),
-                                'id'                => $c->get( 'question_max_answers_field' ),
-                                'label_description' => __( 'A non-negative integer. Set to 0 (zero) for unlimited.' ),
-                                'std'               => 0,
-                                'type'              => 'number',
-                            ],
-                            [
-                                'name'              => __( 'Question Type' ),
-                                'id'                => $c->get( 'question_type_field' ),
-                                'label_description' => __( 'What kind of answer are you expecting?' ),
-                                'type'              => 'select',
-                                'options'           => [
-                                    'multiple_choice' => $t('Multiple Choice'),
-                                    'text'            => $t('Text Field'),
-                                ],
-                                'std'               => 'text',
-                                'plageholder'       => $t('Select type'),
-                            ],
+							[
+								'name'              => __( 'Max Answers' ),
+								'id'                => $c->get( 'question_max_answers_field' ),
+								'label_description' => __( 'A non-negative integer. Set to 0 (zero) for unlimited.' ),
+								'std'               => 0,
+								'type'              => 'number',
+							],
+							[
+								'name'              => __( 'Question Type' ),
+								'id'                => $c->get( 'question_type_field' ),
+								'label_description' => __( 'What kind of answer are you expecting?' ),
+								'type'              => 'select',
+								'options'           => [
+									'multiple_choice' => $t( 'Multiple Choice' ),
+									'text'            => $t( 'Text Field' ),
+								],
+								'std'               => 'text',
+								'plageholder'       => $t( 'Select type' ),
+							],
 						],
 					],
 				];
