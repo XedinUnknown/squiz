@@ -40,6 +40,10 @@ trait Get_Posts_Capable_Trait {
 			]
 		);
 
+		if (isset( $args['post_status'] ) && $args['post_status'] === 'any') {
+			$args['post_status'] = get_post_stati( [ 'exclude_from_search' => false ] );
+		}
+
 		$results = $query->query( $args );
 		if ( ! empty( $wpdb->last_error ) ) {
 			throw new RuntimeException( $wpdb->last_error );

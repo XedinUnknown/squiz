@@ -87,7 +87,7 @@ return function (
 				assert( is_callable( $t ) );
 
 				$f = $c->get( 'template_factory' );
-				assert( $f instanceof PHP_Template );
+				assert( is_callable( $f ) );
 
 				return function ( $template) use ( $resolver, $f, $t) {
 					$template = "{$template}.php";
