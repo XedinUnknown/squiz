@@ -22,6 +22,4 @@ This will create an archive containing the built project with name `squiz-x.y.z-
 in `build/release`. That archive can be installed as a regular WordPress plugin.
 
 [Phing]: https://www.phing.info/
-[latest-release]: /releases/latest 
-
-
+[latest-release]: https://github.com/XedinUnknown/squiz/releases/latest
