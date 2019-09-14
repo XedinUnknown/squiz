@@ -11,6 +11,10 @@ correct answers.
 - Collect data in the form of multiple choice questions, or free-form text.
 - Display any quiz on any page using the `[squiz]` shortcut.
 
+## Requirements
+- WP: 4.0+
+- PHP: 7.0+
+
 ## Installation
 Download the [latest release][latest-release] **build** (not source!) archive, then
 install as a regular composer plugin.
