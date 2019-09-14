@@ -2,26 +2,25 @@
 /**
  * Handler class.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
+
+use Throwable;
 
 /**
  * A base class for all handlers.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 abstract class Handler {
 
-	/**
-	 * The container of services and configuration used by the plugin.
-	 *
-	 * @since 0.1
-	 *
-	 * @var DI_Container
-	 */
-	protected $config;
+	/* @since [*next-version*] */
+	use Config_Aware_Trait;
+
+	/* @since [*next-version*] */
+	use Get_Template_Capable_Trait;
 
 	/**
 	 * Handler constructor.
@@ -31,7 +30,7 @@ abstract class Handler {
 	 * @param DI_Container $config The configuration of this plugin.
 	 */
 	public function __construct( DI_Container $config ) {
-		$this->config = $config;
+		$this->_set_config_container( $config );
 	}
 
 	/**
@@ -59,24 +58,13 @@ abstract class Handler {
 	}
 
 	/**
-	 * Retrieves a config value.
-	 *
-	 * @since 0.1
-	 *
-	 * @param string $key The key of the config value to retrieve.
-	 *
-	 * @return mixed The config value.
-	 */
-	public function get_config( $key ) {
-		return $this->config->get( $key );
-	}
-
-	/**
 	 * Retrieves a URL to the JS directory of the handler.
 	 *
 	 * @since 0.1
 	 *
 	 * @param string $path The path relative to the JS directory.
+	 *
+	 * @throws Throwable If problem retrieving.
 	 *
 	 * @return string The absolute URL to the JS directory.
 	 */
@@ -93,6 +81,8 @@ abstract class Handler {
 	 *
 	 * @param string $path The path relative to the CSS directory.
 	 *
+	 * @throws Throwable If problem retrieving.
+	 *
 	 * @return string The absolute URL to the CSS directory.
 	 */
 	protected function get_css_url( $path = '' ) {
@@ -102,31 +92,14 @@ abstract class Handler {
 	}
 
 	/**
-	 * Gets the template for the specified key.
-	 *
-	 * @since 0.1
-	 *
-	 * @param string $template The template key.
-	 *
-	 * @return PHP_Template The template for the key.
-	 */
-	protected function get_template( $template ) {
-		$factory       = $this->get_config( 'template_factory' );
-		$base_dir      = $this->get_config( 'base_dir' );
-		$templates_dir = $this->get_config( 'templates_dir' );
-
-		$path = "$base_dir/$templates_dir/$template.php";
-
-		return $factory( $path );
-	}
-
-	/**
 	 * Creates a new template block.
 	 *
 	 * @since 0.1
 	 *
 	 * @param PHP_Template|string $template The template or template key.
 	 * @param array               $context The context for the template.
+	 *
+	 * @throws Throwable If problem retrieving.
 	 *
 	 * @return Template_Block The new block.
 	 */

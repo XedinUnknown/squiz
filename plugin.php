@@ -2,21 +2,22 @@
 /**
  * Product Code for WooCommerce plugin.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  * @wordpress-plugin
  *
- * Plugin Name: Taxonomy Quiz
+ * Plugin Name: SQuiz
  * Description: A quiz plugin which relates answers to taxonomies
- * Version: [*next-version*]
+ * Version: 0.1.0
  * Author: Anton Ukhanev
  * Author URI: https://twitter.com/XedinUnknown
- * License: GNU General Public License v3.0
- * License URI: http://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: taxonomy-quiz
+ * Plugin URI: https://github.com/XedinUnknown/squiz
+ * License: GPL v2 or later
+ * License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * Text Domain: squiz
  * Domain Path: /languages
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
 
 /**
  * Retrieves the plugin singleton.
@@ -34,12 +35,21 @@ function plugin() {
 	}
 
 	if ( is_null( $instance ) ) {
-		$base_path        = __FILE__;
-		$base_dir         = dirname( $base_path );
-		$base_url         = plugins_url( '', $base_path );
-		$services_factory = require_once "$base_dir/services.php";
-		$services         = $services_factory( $base_path, $base_url );
-		$container        = new DI_Container( $services );
+		$base_path            = __FILE__;
+		$base_dir             = dirname( $base_path );
+		$base_url             = plugins_url( '', $base_path );
+		$services_factory     = require_once "$base_dir/services.php";
+		$parent_template_path = get_template_directory();
+		$child_template_path  = get_stylesheet_directory();
+		$module_name          = 'squiz'; // Code of the plugin
+		$services             = $services_factory(
+			$base_path,
+			$base_url,
+			$module_name,
+			$parent_template_path,
+			$child_template_path
+		);
+		$container            = new DI_Container( $services );
 
 		$instance = new Plugin( $container );
 	}

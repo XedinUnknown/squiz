@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="PhpCodeSniffer">
+    <phpcs_settings>
+      <PhpCSConfiguration tool_path="$PROJECT_DIR$/../multilingualpress-2-to-3-migration/vendor/bin/phpcs" />
+    </phpcs_settings>
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
-      <path value="$PROJECT_DIR$/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/../../.." />
+      <path value="$PROJECT_DIR$/../mb-relationships" />
+      <path value="$PROJECT_DIR$/../mb-term-meta" />
+      <path value="$PROJECT_DIR$/../meta-box" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/wp-coding-standards/wpcs" />
       <path value="$PROJECT_DIR$/vendor/dealerdirect/phpcodesniffer-composer-installer" />
-      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/phing/phing" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="5.4.0" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7" />
 </project>

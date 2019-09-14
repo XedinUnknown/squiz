@@ -2,10 +2,10 @@
 /**
  * DI_Container class.
  *
- * @package TaxonomyQuiz
+ * @package SQuiz
  */
 
-namespace XedinUnknown\TaxonomyQuiz;
+namespace XedinUnknown\SQuiz;
 
 use Exception;
 use OutOfRangeException;
@@ -13,7 +13,7 @@ use OutOfRangeException;
 /**
  * A simple Dependency Injection container.
  *
- * @package PcfWooCommerce
+ * @package SQuiz
  * @since 0.1
  */
 class DI_Container {
