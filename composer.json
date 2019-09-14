@@ -2,7 +2,7 @@
     "name": "xedinunknown/squiz",
     "description": "A quiz plugin that provides a framework for questions and answers",
     "type": "wordpress-plugin",
-    "license": "GPLv3",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Anton Ukhanev",

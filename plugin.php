@@ -10,8 +10,8 @@
  * Version: 0.1.0
  * Author: Anton Ukhanev
  * Author URI: https://twitter.com/XedinUnknown
- * License: GNU General Public License v3.0
- * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ * License: GPL v2 or later
+ * License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Text Domain: squiz
  * Domain Path: /languages
  */
