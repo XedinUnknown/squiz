@@ -7,7 +7,7 @@
  *
  * Plugin Name: SQuiz
  * Description: A quiz plugin which relates answers to taxonomies
- * Version: 0.1.0-alpha6
+ * Version: 0.1.0
  * Author: Anton Ukhanev
  * Author URI: https://twitter.com/XedinUnknown
  * License: GNU General Public License v3.0
