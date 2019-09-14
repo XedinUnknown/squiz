@@ -19,8 +19,6 @@ use XedinUnknown\SQuiz\Template_Block;
 /**
  * A factory of a service definition map.
  *
- * @since 0.1
- *
  * @param string $base_path Path to the plugin file.
  * @param string $base_url URL of the plugin folder.
  *
@@ -70,8 +68,6 @@ return function (
 
 			/*
 			 * Makes templates.
-			 *
-			 * @since 0.1
 			 */
 			'template_factory'                          => function ( DI_Container $c ) {
 				return function ( $path ) {
@@ -101,9 +97,7 @@ return function (
 			},
 
 			/*
-			 * Makes blocs.
-			 *
-			 * @since 0.1
+			 * Makes blocks.
 			 */
 			'block_factory'                             => function ( DI_Container $c ) {
 				return function ( PHP_Template $template, $context ) {
@@ -113,8 +107,6 @@ return function (
 
 			/*
 			 * Makes callback blocks.
-			 *
-			 * @since 0.1
 			 */
 			'callback_block_factory'                    => function ( DI_Container $c ) {
 				return function ( callable $callback, $context = [] ) {
@@ -124,8 +116,6 @@ return function (
 
 			/*
 			 * List of handlers to run.
-			 *
-			 * @since 0.1
 			 */
 			'handlers'                                  => function ( DI_Container $c ) {
 				return [
@@ -291,7 +281,7 @@ return function (
 						'rewrite'             => false,
 					],
 					/*
-					 * Quizes
+					 * Quizzes
 					 */
 					$c->get( 'quiz_post_type' )            => [
 						'labels'          => [
